@@ -6,7 +6,7 @@
 	
 	//kui ei ole sisse loginud, suunan login lehele.
 	if(!isset($_SESSION["userId"])) {
-		header("Location: KolmasPHP.php");
+		header("Location: Login.php");
 	}
 	
 	
@@ -15,7 +15,7 @@
 		
 		session_destroy();
 		
-		header("Location: KolmasPHP.php");
+		header("Location: Login.php");
 		
 	}
 			if(ISSET($_POST["age"]) &&
