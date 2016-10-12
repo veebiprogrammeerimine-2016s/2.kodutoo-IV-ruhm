@@ -1,0 +1,33 @@
+html 
+{
+height: 100%;
+overflow: hidden;
+padding: 0;
+background-color: #FFFFFF;
+font-family: 'Lucida Console';
+background-image: url("pic.gif");
+}
+
+
+
+
+
+body
+{
+display:block;
+}
+
+
+
+.form
+{
+border: 1px solid;
+font-family: 'Lucida Console';
+text-align: center;
+}
+
+input 
+{
+font-family: 'Lucida Console';
+text-align: center;
+}
