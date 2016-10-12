@@ -90,18 +90,20 @@
         }
 
 
-        function saveEvent($age, $color) {
+        function saveSong($Autor, $Esitaja, $Pealkiri, $Aasta, $Kestvus, $Plaat, $Zanr, $Kommentaar) {
 
           $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
           $GLOBALS["database"]);
 
-          $stmt = $mysqli->prepare("INSERT INTO tk (age, color) VALUES (?, ?)");
+          $stmt = $mysqli->prepare("INSERT INTO songregister (Autor, Esitaja, Pealkiri, Loomise_aasta, Kestvus,
+            Plaat, Žanr, Kommentaar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
           echo $mysqli->error;
 
-          $stmt->bind_param("is", $age, $color);
+          $stmt->bind_param("sssiisss", $Autor, $Esitaja, $Pealkiri, $Aasta,
+           $Kestvus, $Plaat, $Zanr, $Kommentaar);
 
           if ($stmt->execute()) {
-            echo "õnnestus";
+            echo "Õnnestus!";
           } else {
             echo "ERROR ".$stmt->error;
 
@@ -109,15 +111,15 @@
 
         }
 
-        function getAllPeople() {
+        function getAllSongs() {
+
           $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
           $GLOBALS["database"]);
 
           $stmt = $mysqli->prepare("
-          SELECT id, age, color
-          FROM tk
+          SELECT id, Autor, Esitaja, Pealkiri, Loomise_aasta, Kestvus, Plaat, Žanr, Kommentaar FROM songregister
           ");
-          $stmt->bind_result($id, $age, $color);
+          $stmt->bind_result($id, $Autor, $Esitaja, $Pealkiri, $Aasta, $Kestvus, $Plaat, $Zanr, $Kommentaar);
           $stmt->execute();
 
           $results = array();
@@ -127,8 +129,14 @@
 
             $human = new StdClass();
             $human->id = $id;
-            $human->age = $age;
-            $human->lightcolor = $color;
+            $human->autor = $Autor;
+            $human->esitaja = $Esitaja;
+            $human->pealkiri = $Pealkiri;
+            $human->loomise_aasta = $Aasta;
+            $human->kestvus = $Kestvus;
+            $human->plaat = $Plaat;
+            $human->zanr = $Zanr;
+            $human->kommentaar = $Kommentaar;
 
             //echo $age."<br>";
             //echo $color."<br>";

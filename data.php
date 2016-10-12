@@ -17,23 +17,36 @@
       exit();
     }
 
-    if ( isset($_POST["age"]) &&
-   isset($_POST["color"]) &&
-   !empty($_POST["age"]) &&
-   !empty($_POST["color"])
+    if ( isset($_POST["autor"]) &&
+   isset($_POST["esitaja"]) &&
+   isset($_POST["pealkiri"]) &&
+   isset($_POST["loomise_aasta"]) &&
+   isset($_POST["kestvus"]) &&
+   isset($_POST["plaat"]) &&
+   isset($_POST["zanr"]) &&
+   isset($_POST["kommentaar"]) &&
+   !empty($_POST["autor"]) &&
+   !empty($_POST["esitaja"]) &&
+   !empty($_POST["pealkiri"]) &&
+   !empty($_POST["loomise_aasta"]) &&
+   !empty($_POST["kestvus"]) &&
+   !empty($_POST["plaat"]) &&
+   !empty($_POST["zanr"]) &&
+   !empty($_POST["kommentaar"])
+
   ) {
 
-  $color = cleanInput($_POST["color"]);
-  $age = cleanInput($_POST["age"]);
+  //$color = cleanInput($_POST["color"]);
+  //$age = cleanInput($_POST["age"]);
 
-  saveEvent($age, $color);
+  saveSong($Autor, $Esitaja, $Pealkiri, $Loomise_aasta, $Kestvus, $Plaat, $Zanr, $Kommentaar);
 
   }
 
-  $people = getAllPeople();
+  $songs = getAllSongs();
 
   echo "<pre>";
-  var_dump($people[5]);
+  var_dump($songs[5]);
   echo "</pre>";
 
 ?>
@@ -48,19 +61,50 @@
 
 </p>
 
-    <h2>Salvesta sündmus </h2>
+    <h2>Salvesta oma teos </h2>
 
     <form method = "POST" >
 
-      <label> Vanus </label><br>
-      <input name="age" type="number">
+      <label> Autor </label><br>
+      <input name="autor" type="text">
 
       <br><br>
 
-      <label> Värv </label><br>
-      <input name="color" type="color">
+      <label> Esitaja </label><br>
+      <input name="esitaja" type="text">
 
       <br><br>
+
+      <label> Pealkiri </label><br>
+      <input name="pealkiri" type="text">
+
+      <br><br>
+
+      <label> Loomise aasta </label><br>
+      <input name="loomise_aasta" type="number">
+
+      <br><br>
+
+      <label> Kestvus </label><br>
+      <input name="kestvus" type="time">
+
+      <br><br>
+
+      <label> Plaat </label><br>
+      <input name="plaat" type="text">
+
+      <br><br>
+
+      <label> Žanr </label><br>
+      <input name="zanr" type="text">
+
+      <br><br>
+
+      <label> Kommentaar </label><br>
+      <input name="kommentaar" type="text">
+
+      <br><br
+
 	<input type="submit" value="Salvesta">
 
 </form>
@@ -74,16 +118,27 @@
 
       $html .= "<tr>";
         $html .= "<th>ID</th>";
-        $html .= "<th>Vanus</th>";
-        $html .= "<th>Värv</th>";
+        $html .= "<th>Autor</th>";
+        $html .= "<th>Esitaja</th>";
+        $html .= "<th>Loomise aasta</th>";
+        $html .= "<th>Kestvus</th>";
+        $html .= "<th>Plaat</th>";
+        $html .= "<th>Žanr</th>";
+        $html .= "<th>Kommentaar</th>";
       $html .= "</tr>";
 
-      foreach ($people as $p)  {
+      foreach ($songs as $s)  {
 
         $html .= "<tr>";
-          $html .= "<td>".$p->id."</td>";
-          $html .= "<td>".$p->age."</td>";
-          $html .= "<td>".$p->lightcolor."</td>";
+          $html .= "<td>".$s->id."</td>";
+          $html .= "<td>".$s->autor."</td>";
+          $html .= "<td>".$s->esitaja."</td>";
+          $html .= "<td>".$s->pealkiri."</td>";
+          $html .= "<td>".$s->loomise_aasta."</td>";
+          $html .= "<td>".$s->kestvus."</td>";
+          $html .= "<td>".$s->plaat."</td>";
+          $html .= "<td>".$s->zanr."</td>";
+          $html .= "<td>".$s->kommentaar."</td>";
         $html .= "</tr>";
 
 
@@ -100,7 +155,7 @@
 
 <?php
 
-    foreach ($people as $p)  {
+  /*  foreach ($people as $p)  {
 
       $style = "
         background-color:".$p->lightcolor.";
@@ -116,6 +171,6 @@
 
       echo "<p style ='  ".$style."  '>".$p->age."</p>";
 
-    }
 
+      */
  ?>

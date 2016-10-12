@@ -121,6 +121,7 @@
 	if (isset ($_POST["gender"])) {
 
 			if (!isset ($_POST["gender"])) {
+
 				$genderError = "* Valik on kohustuslik!";
 
 			} else {
@@ -189,6 +190,44 @@
 		$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
 	}
 
+	$loginEmail = "";
+	$loginEmailError = " ";
+
+	if (isset ($_POST["loginEmail"])) {
+
+
+		if (empty ($_POST["loginEmail"])) {
+
+
+			$loginEmailError = "* Unustasid e-maili!";
+
+		} else {
+
+			$loginEmail = $_POST["loginEmail"];
+
+		}
+
+	}
+
+	$loginPassword = "";
+	$loginPasswordError = " ";
+
+	if (isset ($_POST["loginPassword"])) {
+
+
+		if (empty ($_POST["loginPassword"])) {
+
+
+			$loginPasswordError = "* Unustasid parooli!";
+
+		} else {
+
+			$loginPassword = $_POST["loginPassword"];
+
+		}
+
+	}
+
 
 ?>
 
@@ -204,11 +243,11 @@
 		<form method="POST" >
 
 			<label> E-post</label><br>
-			<input name="loginEmail" type="email">
+			<input name="loginEmail" type="email" value="<?=$loginEmail;?>"> <?php echo $loginEmailError; ?>
 
 			<br><br>
 			<label> Parool</label><br>
-			<input name="loginPassword" type="password">
+			<input name="loginPassword" type="password"> <?php echo $loginPasswordError; ?>
 
 			<br><br>
 
