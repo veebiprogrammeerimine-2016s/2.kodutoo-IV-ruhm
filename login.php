@@ -17,7 +17,7 @@
 
 //Muutujad
 	$signupEmailError = "*";
-	$signupEmail = " ";
+	$signupEmail = "";
 
 	//kas keegi vajutas nuppu ja see on olemas
 
@@ -60,7 +60,7 @@
 
 	}
 
-	$firstname = " ";
+	$firstname = "";
 	$firstnameError = "*";
 
 	if (isset ($_POST["firstname"])) {
@@ -78,7 +78,7 @@
 
 	}
 
-	$lastname = " ";
+	$lastname = "";
 	$lastnameError = "*";
 
 
@@ -97,7 +97,7 @@
 
 	}
 
-	$birthdate = " ";
+	$birthdate = "";
 	$birthdateError = "*";
 
 
@@ -115,7 +115,7 @@
 	}
 
 
-	$gender = " ";
+	$gender = "";
 	$genderError = "*";
 
 	if (isset ($_POST["gender"])) {
@@ -129,7 +129,7 @@
 
 		}
 
-	$profession = " ";
+	$profession = "";
 
 	if (isset ($_POST["profession"])) {
 
@@ -138,7 +138,7 @@
 
 
 
-	$hobbies = " ";
+	$hobbies = "";
 
 	if (isset ($_POST["hobbies"])) {
 
@@ -188,6 +188,7 @@
 
 		$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
 	}
+
 
 ?>
 
