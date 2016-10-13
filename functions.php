@@ -93,10 +93,10 @@
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli ->prepare("INSERT INTO tvshows (showname, season, episode) VALUE(?,?,?)");
+		$stmt = $mysqli ->prepare("INSERT INTO tvshows (showname, season, episode, userid) VALUE(?,?,?,?)");
 		echo $mysqli->error;
 		
-		$stmt->bind_param("sii", $show, $season, $episode);
+		$stmt->bind_param("siii", $show, $season, $episode, $_SESSION ["userId"]);
 	
 		if($stmt->execute() ) {
 			echo "Õnnestus!","<br>";			
@@ -110,7 +110,9 @@
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("SELECT id, showname, season, episode FROM tvshows");
+		$stmt = $mysqli->prepare("SELECT id, showname, season, episode FROM tvshows Where userid = ?");
+		
+		$stmt->bind_param("i", $_SESSION ["userId"]);
 		$stmt->bind_result($id, $show, $season, $episode);
 		$stmt->execute ();
 		
