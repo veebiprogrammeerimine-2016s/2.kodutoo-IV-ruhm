@@ -1,0 +1,63 @@
+body {
+	background: #efffde;
+	/* Old Browsers */background: -moz-linear-gradient(-45deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	 /* FF3.6+ */background: -webkit-gradient(left top, right bottom, color-stop(0%, #efffde), color-stop(70%, #ffffff), color-stop(100%, #ffffff));
+	/* Chrome, Safari4+ */background: -webkit-linear-gradient(-45deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	 /* Chrome10+,Safari5.1+ */background: -o-linear-gradient(-45deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	 /* Opera 11.10+ */background: -ms-linear-gradient(-45deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	 /* IE 10+ */background: linear-gradient(135deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	/* W3C */filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efffde', endColorstr='#ffffff', GradientType=1 );
+	/* IE6-9 fallback on horizontal gradient */
+}
+
+.wrapper {
+	width: 960px;	
+	background-color: white;
+	margin: 0px auto 0px auto;
+	overflow: auto;
+}
+
+header {
+	background-color: #b5ff66;
+	width: 960px;
+	height: 96px;
+	margin: 25px auto 0px auto;
+	border-radius: 5px;
+	text-align:center;
+}
+
+h1 {
+	padding:25px;
+	font-variant: small-caps;
+}
+
+.loginBox {
+	text-align: center;
+	background-color: #efffde;
+	margin: 50px 25px 25px 25px;
+	border-radius: 5px;
+	padding: 25px;
+}
+
+.signUpBox {
+	text-align: center;
+	background-color: #efffde;
+	margin: 0px 25px 25px 25px;
+	border-radius: 5px;
+	padding: 25px;
+}
+
+.invitation {
+	text-align: center;
+	padding-left: 200px;
+	padding-right: 200px;
+}
+
+
+
+
+footer p {
+	text-align: center;
+	margin-top: 100px;
+	margin-bottom: 50px;
+}
