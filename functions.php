@@ -90,17 +90,16 @@
         }
 
 
-        function saveSong($Autor, $Esitaja, $Pealkiri, $Aasta, $Kestvus, $Plaat, $Zanr, $Kommentaar) {
+        function saveSong($author, $artist, $songname, $created, $duration, $album, $genre, $comment) {
 
           $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
           $GLOBALS["database"]);
 
-          $stmt = $mysqli->prepare("INSERT INTO songregister (Autor, Esitaja, Pealkiri, Loomise_aasta, Kestvus,
-            Plaat, Žanr, Kommentaar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+          $stmt = $mysqli->prepare("INSERT INTO songregister (author, artist, songname, created, duration,
+            album, genre, comment) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
           echo $mysqli->error;
 
-          $stmt->bind_param("sssiisss", $Autor, $Esitaja, $Pealkiri, $Aasta,
-           $Kestvus, $Plaat, $Zanr, $Kommentaar);
+          $stmt->bind_param("sssiisss", $author, $artist, $songname, $created, $duration, $album, $genre, $comment);
 
           if ($stmt->execute()) {
             echo "Õnnestus!";
@@ -116,10 +115,9 @@
           $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
           $GLOBALS["database"]);
 
-          $stmt = $mysqli->prepare("
-          SELECT id, Autor, Esitaja, Pealkiri, Loomise_aasta, Kestvus, Plaat, Žanr, Kommentaar FROM songregister
-          ");
-          $stmt->bind_result($id, $Autor, $Esitaja, $Pealkiri, $Aasta, $Kestvus, $Plaat, $Zanr, $Kommentaar);
+          $stmt = $mysqli->prepare("SELECT id, author, artist, songname, created, duration, album, genre, comment FROM songregister");
+
+          $stmt->bind_result($id, $author, $artist, $songname, $created, $duration, $album, $genre, $comment);
           $stmt->execute();
 
           $results = array();
@@ -129,14 +127,14 @@
 
             $human = new StdClass();
             $human->id = $id;
-            $human->autor = $Autor;
-            $human->esitaja = $Esitaja;
-            $human->pealkiri = $Pealkiri;
-            $human->loomise_aasta = $Aasta;
-            $human->kestvus = $Kestvus;
-            $human->plaat = $Plaat;
-            $human->zanr = $Zanr;
-            $human->kommentaar = $Kommentaar;
+            $human->author = $author;
+            $human->artist = $artist;
+            $human->songname = $songname;
+            $human->created = $created;
+            $human->duration = $duration;
+            $human->album = $album;
+            $human->genre = $genre;
+            $human->comment = $comment;
 
             //echo $age."<br>";
             //echo $color."<br>";

@@ -17,37 +17,45 @@
       exit();
     }
 
-    if ( isset($_POST["autor"]) &&
-   isset($_POST["esitaja"]) &&
-   isset($_POST["pealkiri"]) &&
-   isset($_POST["loomise_aasta"]) &&
-   isset($_POST["kestvus"]) &&
-   isset($_POST["plaat"]) &&
-   isset($_POST["zanr"]) &&
-   isset($_POST["kommentaar"]) &&
-   !empty($_POST["autor"]) &&
-   !empty($_POST["esitaja"]) &&
-   !empty($_POST["pealkiri"]) &&
-   !empty($_POST["loomise_aasta"]) &&
-   !empty($_POST["kestvus"]) &&
-   !empty($_POST["plaat"]) &&
-   !empty($_POST["zanr"]) &&
-   !empty($_POST["kommentaar"])
+    if ( isset($_POST["author"]) &&
+   isset($_POST["artist"]) &&
+   isset($_POST["songname"]) &&
+   isset($_POST["created"]) &&
+   isset($_POST["duration"]) &&
+   isset($_POST["album"]) &&
+   isset($_POST["genre"]) &&
+   isset($_POST["comment"]) &&
+   !empty($_POST["author"]) &&
+   !empty($_POST["artist"]) &&
+   !empty($_POST["songname"]) &&
+   !empty($_POST["created"]) &&
+   !empty($_POST["duration"]) &&
+   !empty($_POST["album"]) &&
+   !empty($_POST["genre"]) &&
+   !empty($_POST["comment"])
 
   ) {
 
   //$color = cleanInput($_POST["color"]);
   //$age = cleanInput($_POST["age"]);
+  $author= cleanInput($_POST["author"]);
+  $artist= cleanInput($_POST["artist"]);
+  $songname= cleanInput($_POST["songname"]);
+  $created= cleanInput($_POST["created"]);
+  $duration= cleanInput($_POST["duration"]);
+  $album= cleanInput($_POST["album"]);
+  $genre= cleanInput($_POST["genre"]);
+  $comment= cleanInput($_POST["comment"]);
 
-  saveSong($Autor, $Esitaja, $Pealkiri, $Loomise_aasta, $Kestvus, $Plaat, $Zanr, $Kommentaar);
+  saveSong($author, $artist, $songname, $created, $duration, $album, $genre, $comment);
 
   }
 
   $songs = getAllSongs();
 
-  echo "<pre>";
+  /*echo "<pre>";
   var_dump($songs[5]);
-  echo "</pre>";
+  echo "</pre>";*/
 
 ?>
 
@@ -66,50 +74,50 @@
     <form method = "POST" >
 
       <label> Autor </label><br>
-      <input name="autor" type="text">
+      <input name="author" type="text">
 
       <br><br>
 
       <label> Esitaja </label><br>
-      <input name="esitaja" type="text">
+      <input name="artist" type="text">
 
       <br><br>
 
       <label> Pealkiri </label><br>
-      <input name="pealkiri" type="text">
+      <input name="songname" type="text">
 
       <br><br>
 
       <label> Loomise aasta </label><br>
-      <input name="loomise_aasta" type="number">
+      <input name="created" type="number">
 
       <br><br>
 
       <label> Kestvus </label><br>
-      <input name="kestvus" type="time">
+      <input name="duration" type="time">
 
       <br><br>
 
       <label> Plaat </label><br>
-      <input name="plaat" type="text">
+      <input name="album" type="text">
 
       <br><br>
 
       <label> Žanr </label><br>
-      <input name="zanr" type="text">
+      <input name="genre" type="text">
 
       <br><br>
 
       <label> Kommentaar </label><br>
-      <input name="kommentaar" type="text">
+      <input name="comment" type="text">
 
-      <br><br
+      <br><br>
 
-	<input type="submit" value="Salvesta">
+	    <input type="submit" value="Salvesta">
 
 </form>
 
-<h2> Arhiiv </h2>
+<h2> Kõik salvestatud teosed </h2>
 
 <?php
 
@@ -120,6 +128,7 @@
         $html .= "<th>ID</th>";
         $html .= "<th>Autor</th>";
         $html .= "<th>Esitaja</th>";
+        $html .= "<th>Pealkiri</th>";
         $html .= "<th>Loomise aasta</th>";
         $html .= "<th>Kestvus</th>";
         $html .= "<th>Plaat</th>";
@@ -131,14 +140,14 @@
 
         $html .= "<tr>";
           $html .= "<td>".$s->id."</td>";
-          $html .= "<td>".$s->autor."</td>";
-          $html .= "<td>".$s->esitaja."</td>";
-          $html .= "<td>".$s->pealkiri."</td>";
-          $html .= "<td>".$s->loomise_aasta."</td>";
-          $html .= "<td>".$s->kestvus."</td>";
-          $html .= "<td>".$s->plaat."</td>";
-          $html .= "<td>".$s->zanr."</td>";
-          $html .= "<td>".$s->kommentaar."</td>";
+          $html .= "<td>".$s->author."</td>";
+          $html .= "<td>".$s->artist."</td>";
+          $html .= "<td>".$s->songname."</td>";
+          $html .= "<td>".$s->created."</td>";
+          $html .= "<td>".$s->duration."</td>";
+          $html .= "<td>".$s->album."</td>";
+          $html .= "<td>".$s->genre."</td>";
+          $html .= "<td>".$s->comment."</td>";
         $html .= "</tr>";
 
 
@@ -150,27 +159,3 @@
 
 
 ?>
-
-<h2> Midagi huvitavat </h2>
-
-<?php
-
-  /*  foreach ($people as $p)  {
-
-      $style = "
-        background-color:".$p->lightcolor.";
-        width: 40px;
-        height: 40px;
-        border-radius: 20px;
-        text-align: center;
-        line-height: 39px;
-        float: left;
-        margin: 20px;
-
-      ";
-
-      echo "<p style ='  ".$style."  '>".$p->age."</p>";
-
-
-      */
- ?>

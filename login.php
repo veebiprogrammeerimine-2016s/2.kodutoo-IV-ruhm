@@ -32,7 +32,7 @@
 
 		} else {
 			// email on olemas ja õige
-			$signupEmail = $_POST["signupEmail"];
+			$signupEmail = cleanInput($_POST["signupEmail"]);
 
 		}
 
@@ -72,7 +72,7 @@
 
 		}  else {
 
-				$firstname = $_POST["firstname"];
+				$firstname = cleanInput($_POST["firstname"]);
 
 		}
 
@@ -91,7 +91,7 @@
 
 		} else {
 
-				$lastname = $_POST["lastname"];
+				$lastname = cleanInput($_POST["lastname"]);
 
 		}
 
@@ -108,7 +108,7 @@
 
 			$birthdateError = "* Väli on kohustuslik!";
 
-		} else { $birthdate = $_POST["birthdate"];
+		} else { $birthdate = cleanInput($_POST["birthdate"]);
 
 		}
 
@@ -125,7 +125,7 @@
 				$genderError = "* Valik on kohustuslik!";
 
 			} else {
-				$gender = $_POST["gender"];
+				$gender = cleanInput($_POST["gender"]);
 			}
 
 		}
@@ -134,7 +134,7 @@
 
 	if (isset ($_POST["profession"])) {
 
-				$profession = $_POST["profession"];
+				$profession = cleanInput($_POST["profession"]);
 			}
 
 
@@ -143,7 +143,7 @@
 
 	if (isset ($_POST["hobbies"])) {
 
-				$hobbies = $_POST["hobbies"];
+				$hobbies = cleanInput($_POST["hobbies"]);
 			}
 
 
@@ -203,7 +203,7 @@
 
 		} else {
 
-			$loginEmail = $_POST["loginEmail"];
+			$loginEmail = cleanInput($_POST["loginEmail"]);
 
 		}
 
@@ -222,7 +222,7 @@
 
 		} else {
 
-			$loginPassword = $_POST["loginPassword"];
+			$loginPassword = cleanInput($_POST["loginPassword"]);
 
 		}
 
