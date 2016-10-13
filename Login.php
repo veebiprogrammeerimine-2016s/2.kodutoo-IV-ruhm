@@ -11,6 +11,16 @@
 	header("Location: data.php");
 	
 	}
+	if(isset($_POST["LoginEmail"])) {
+		$LoginEmail = $_POST["LoginEmail"];
+	} else {
+		$LoginEmail = '';
+	}
+	if(isset($_POST["signupEmail"])) {
+		$signupEmail = $_POST["signupEmail"];
+	} else {
+		$signupEmail = '';
+	}
 	//var_dump($_GET);
 	
 	//echo "<br>";
@@ -27,7 +37,7 @@
 		
 		if (empty ($_POST["signupEmail"])) {
 			
-			$signupEmailError = "V2li on kohustuslik";
+			$signupEmailError = "Väli on kohustuslik";
 		}
 
 	}
@@ -35,13 +45,30 @@
 		
 		if (empty ($_POST["SignupPassword"])) {
 			
-			$signupPasswordError = "V2li on kohustuslik";
+			$signupPasswordError = "Väli on kohustuslik";
 		} else {
 		if (strlen($_POST["SignupPassword"])<8 ) {
 			$signupPasswordError = "Parool peab olema vähemalt 8 tähemärki";
 		}
 	}
 		}
+	
+		if (isset ($_POST["LoginEmail"])){
+		
+		if (empty ($_POST["LoginEmail"])) {
+			
+			$LoginEmailError = "Väli on kohustuslik";
+		}
+
+	}
+		if (isset ($_POST["loginPassword"])){
+		
+		if (empty ($_POST["loginPassword"])) {
+			
+			$loginPasswordError = "Väli on kohustuslik";
+		}
+	}
+	
 	
 		if ( $signupEmailError == "" && 
 			 $signupPasswordError == "" && 
@@ -83,7 +110,7 @@
 		<p style="color:red;"><?=$notice;?></p>
 		<form method="POST">
 			<label>E-post</label><br>
-			<input name="LoginEmail" type="email"> <?php echo $LoginEmailError;?>
+			<input name="LoginEmail" type="email" value="<?= $LoginEmail?>"><?php echo $LoginEmailError;?>
 			
 			<br><br>
 			
@@ -96,7 +123,7 @@
 				<h1>Loo kasutaja</h1>
 				<form method="POST">
 			<label>Signup E-post</label><br>
-			<input name="signupEmail" type="email"> 
+			<input name="signupEmail" type="email" value="<?= $signupEmail ?>"> 
 			<?php echo $signupEmailError;?>
 				
 			<br><br>
