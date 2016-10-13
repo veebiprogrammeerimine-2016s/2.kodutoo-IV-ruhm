@@ -93,7 +93,7 @@
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli ->prepare("INSERT INTO sarjad (sari, hooaeg, osa) VALUE(?,?,?)");
+		$stmt = $mysqli ->prepare("INSERT INTO tvshows (showname, season, episode) VALUE(?,?,?)");
 		echo $mysqli->error;
 		
 		$stmt->bind_param("sii", $show, $season, $episode);
@@ -110,7 +110,7 @@
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("SELECT id, sari, hooaeg, osa FROM sarjad");
+		$stmt = $mysqli->prepare("SELECT id, showname, season, episode FROM tvshows");
 		$stmt->bind_result($id, $show, $season, $episode);
 		$stmt->execute ();
 		

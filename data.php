@@ -31,7 +31,7 @@ require("functions.php");
 		
 		) {
 								
-			saveShow(cleanInput($_POST["show"],$_POST["season"],$_POST["episode"]));
+			saveShow(cleanInput($_POST["show"]),cleanInput($_POST["season"]),cleanInput($_POST["episode"]));
 			
 		}
 	

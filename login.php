@@ -144,7 +144,7 @@
 	
 		//echo $password ;
 		
-		signup($signupEmail, $password);
+		signup(cleanInput($signupEmail), $password);
 		
 		
 		}
@@ -159,7 +159,7 @@
 			 !empty($_POST["loginPassword"]) 
 		
 		) {
-			$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
+			$notice = login(cleanInput($_POST["loginEmail"]), cleanInput($_POST["loginPassword"]));
 		
 		} 
 			 
