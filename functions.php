@@ -9,6 +9,7 @@
 	session_start();
 	
 	
+	
 
 	
 	function signup($email, $password, $mobile, $gender) {
@@ -91,7 +92,7 @@
 
 
 
-	function submit($caption, $imgurl) {
+	/*function submit($caption, $imgurl) {
 		
 		$database = "if16_greg_4";
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
@@ -110,7 +111,7 @@
 		} else {
 			echo "<span style='background: #000000;font-size: 250%;color: red'>There was an error submitting your post</span>";//.$stmt->error;
 		}
-	}
+	}*/
 	
 	
 	

@@ -1,13 +1,16 @@
 <?php
 	
 
-	require("functions.php");
+	require("upload.php");
 	
 	if (!isset($_SESSION["userId"])) {
 		
 		header("Location: login.php");
 		exit();
 	}
+	
+	
+	$successPost = "";
 	
 	if (isset($_GET["logout"])) {
 		
@@ -16,27 +19,31 @@
 		header("Location: login.php");
 		exit();
 	}
+	
+	if (isset($_GET["success"])) {
+		
+		$successPost = "The file has been uploaded.";
+	}
 
 	
 	
 	
 	
 	
-	$caption = "";
-	$imgurl = "";
 	
 	
 	
-	if (!empty($_POST["caption"]) &&
+	
+	/*if (!empty($_POST["caption"]) &&
 		!empty($_POST["imgurl"]) &&
 		isset($_POST["caption"]) &&
 		isset($_POST["imgurl"])
 		) 
 	{
-		submit(cleanInput($_POST["caption"], $_POST["imgurl"]));
+		submit(cleanInput($_POST["caption"]), cleanInput($_POST["imgurl"]));
 		header("Location: data.php");
 		exit();
-	}
+	}*/
 	
 	
 	
@@ -54,32 +61,42 @@
 	<a href="?logout=1">Log out</a>
 </p>
 
-	
-<div class="form"><form name="submit" id="submit" method="POST" >
+<div class="form">
+
+
 		
 		
 		<font color="white"><h2>Submit a post</h2></font>
 		
-			<input name="caption" placeholder="Caption" type="text">
-			
-			<br><br>
-			
-			<input name="imgurl" placeholder="Image URL" type="text"> 
-			
-			<br><br>
-			
-			<input type="submit" value="Submit">
-			
 
-			
-		</form></div>
+		
+		
+		
+			<form name="postpic" action="upload.php" method="post" enctype="multipart/form-data">
+
+				Select image to upload:
+				<input type="file" name="fileToUpload" id="fileToUpload">  <?php echo $successPost; ?>
+				<br><br>
+				<input type="submit" value="Upload Image" name="submit">
+			</form>
+		
+		
+		
+		
+</div>
+		
+		<br><br>
+		
+<div class="fixed">
+Greg Nesselmann 2016
+</div>
 
 
 
 	
 	<?php
-
-		$html = "<div>";
+		/*
+		$html = "<div class="form">";
 	
 		$html .= "<h2>Submitted posts</h2>";
 	
@@ -96,7 +113,7 @@
 				$html .= "<tr>";
 					$html .= "<td>". $p->id."</td>";
 					$html .= "<td>". $p->caption."</td>";
-					$html .= "<td>". $p->imgurl."</td>";
+					$html .= "<td>".$p->imgurl."</td>";
 				$html .= "</tr>";
 			}
 		
@@ -106,7 +123,28 @@
 		$html .= "</div>";
 		
 		echo $html;
+		
+		*/
+	?>
+	
+	<?php
+		
+		$html = "";
 
+		foreach ($people as $p) {
+			$html .= "<br><br>";
+			$html .= "<div class='form'> ";
+	
+				//$html .= "<td>". $p->id."</td>";
+				$html .= "<h3>". $p->caption."</h3>";
+				$html .= "<p>"."<img src=".$p->imgurl. ">"."</p>";
+				$html .= "<br><br>";
+			$html .= "</div>";
+		}
+	
+		
+		
+		echo $html;
 	?>
 
 	
