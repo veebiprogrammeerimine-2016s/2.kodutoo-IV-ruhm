@@ -159,3 +159,12 @@
 
 
 ?>
+
+<h2>Player test</h2>
+
+
+
+<audio controls>
+  <source src="" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
