@@ -47,7 +47,7 @@ require("functions.php");
 
 <p>
 
-	Tere Tulemast <?=$_SESSION ["userEmail"];?> !
+	Tere tulemast <a href="user.php"><?=$_SESSION["userEmail"];?></a>!
 	<a href="?logout=1">Logi Välja</a>
 
 </p>
