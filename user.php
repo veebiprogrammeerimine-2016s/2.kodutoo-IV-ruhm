@@ -45,7 +45,7 @@
 	}
 	
     $interests = getAllInterests();
-	
+	$allUserInterests = getUserInterests();
 ?>
 <h1><a href="data.php"> < tagasi</a> Kasutaja leht</h1>
 <?=$msg;?>
@@ -109,3 +109,24 @@
 	<input type="submit" value="Lisa">
 	
 </form>
+<?php
+	
+	
+	$html = "<table>";
+	
+		$html .= "<tr>";
+			$html .= "<td>Huvialad</td>";
+		$html .= "</tr>";
+		
+		foreach ($allUserInterests as $i) {
+			
+			$html .= "<tr>";
+				$html .= "<td>".$i->interest."</td>";
+			$html .= "</tr>";
+			
+		}
+		
+	$html .= "</table>";
+	
+	echo $html;	
+?>

@@ -11,7 +11,7 @@ require("functions.php");
 	}
 		
 	
-	
+	$saveShowError = "";
 	
 	//kas aadressi real on logout
 	if (isset($_GET["logout"])) {
@@ -33,6 +33,8 @@ require("functions.php");
 								
 			saveShow(cleanInput($_POST["show"]),cleanInput($_POST["season"]),cleanInput($_POST["episode"]));
 			
+		} else {
+			$saveShowError = "Täida väljad !";
 		}
 	
 		$shows = getAllShows();
@@ -57,7 +59,8 @@ require("functions.php");
 <body>
 
 	<h1>Mis sarja vaatasid?</h1>
-	
+		<?php echo $saveShowError ; ?> 
+		<br>
 	<form method="POST">
 	
 		<label>Sarja nimi:</label> 
