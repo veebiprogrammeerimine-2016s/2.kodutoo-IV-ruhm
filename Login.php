@@ -77,14 +77,25 @@
 			 ) {
 				 
 				 //vigu ei olnud, kõik on olemas
-				 echo "Salvestan...<br>";
 				 $password = hash("sha512", $_POST["SignupPassword"]);
 				 $signupEmail = $_POST["signupEmail"];
 				 $sugu = $_POST["Gender"];
 				 $auto = $_POST["Autosort"];
 				 echo "email ".$signupEmail."<br>";
+				 if (cleanInput($signupEmail) === 'jama')  {
+					 
+					echo "tahad mingit käkki kokku keerata või?"; 
+					 
+				 } elseif (cleanInput($SignupPassword) === 'jama') {
+
+					echo "tahad mingit käkki kokku keerata või?";
+					
+				 } else {
+					 
 				 signup($signupEmail, $password, $sugu, $auto); //sugu ja auto siia! Config.php ja functions.php-le muudatused (uus andmebaas 'n shiz)!
-			 }
+				 
+				 }
+			}
 			
 		//kas kasutaja tahab sisse logida
 				
