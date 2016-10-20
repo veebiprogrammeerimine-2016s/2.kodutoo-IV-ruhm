@@ -1,16 +1,21 @@
 <?php
 
 require("functions.php");
+//var_dump($_FILES);
 
-
-if (isset($_FILES["fileToUpload"]))  {
-
-	$largeError = "";
+if	(
+	(isset($_POST["caption"]) &&
+	(isset($_FILES["fileToUpload"]))&& 
+	!empty(($_FILES["fileToUpload"]["name"]))))
+	
+	{
+	
+	
 	$target_dir = "pildid/";
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-	// Check if image file is a actual image or fake image
+	// Check if image file is an actual image or fake image
 	if(isset($_POST["submit"])) {
 		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 		if($check !== false) {
@@ -23,18 +28,18 @@ if (isset($_FILES["fileToUpload"]))  {
 	}
 	// Check if file already exists
 	if (file_exists($target_file)) {
-		echo "Sorry, file already exists.";
+		echo "Sorry, file already exists. ";
 		$uploadOk = 0;
 	}
 	// Check file size
 	if ($_FILES["fileToUpload"]["size"] > 500000) {
-		$largeError = "Sorry, your file is too large.";
+		echo "Sorry, your file is too large. ";
 		$uploadOk = 0;
 	}
 	// Allow certain file formats
 	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 	&& $imageFileType != "gif" ) {
-		echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+		echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed. ";
 		$uploadOk = 0;
 	}
 	// Check if $uploadOk is set to 0 by an error
@@ -48,19 +53,21 @@ if (isset($_FILES["fileToUpload"]))  {
 			
 			$database = "if16_greg_4";
 			$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
-			$stmt = $mysqli->prepare("INSERT INTO submissions (imgurl) values (?)");
+			$stmt = $mysqli->prepare("INSERT INTO submissions (caption,imgurl) values (?,?)");
 			
 			echo $mysqli->error;
 			// s -string
 			// i - int
 			// d- double
 			//
-			$stmt->bind_param("s", $target_file);
+			$caption = cleanInput($_POST["caption"]);
+			$stmt->bind_param("ss", $caption, $target_file);
 			
 			
 			if ($stmt->execute()) {
-				header("Location: data.php?success=1");
+				//header("Location: data.php");
 			}
+			echo $stmt->error;
 			
 			
 			

@@ -4,10 +4,12 @@ html
 padding: 25px;
 background-color: #000000;
 font-family: 'Lucida Console';
---background-image: url("pic.gif");
 }
 
-
+body
+{
+color:green;
+}
 
 h1
 {
@@ -21,11 +23,7 @@ color: green;
 background-color: black;
 }
 
-body
-{
 
-color:green;
-}
 
 div.fixed {
     position: fixed;
@@ -58,13 +56,20 @@ padding: 50px;
 
 div.form
 {
+position: relative;
+ width: 400px;
 border: 1px solid;
-font-family: 'Lucida Console';
-background-color: black;
-padding: 25px;
-margin: left;
-position: static;
+padding:25px;
 }
+
+div.pic
+{
+position: relative;
+ width: 800px;
+border: 1px solid;
+padding:25px;
+}
+
 
 
 

@@ -10,7 +10,6 @@
 	}
 	
 	
-	$successPost = "";
 	
 	if (isset($_GET["logout"])) {
 		
@@ -20,30 +19,16 @@
 		exit();
 	}
 	
-	if (isset($_GET["success"])) {
-		
-		$successPost = "The file has been uploaded.";
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*if (!empty($_POST["caption"]) &&
-		!empty($_POST["imgurl"]) &&
-		isset($_POST["caption"]) &&
-		isset($_POST["imgurl"])
-		) 
-	{
-		submit(cleanInput($_POST["caption"]), cleanInput($_POST["imgurl"]));
-		header("Location: data.php");
-		exit();
-	}*/
 	
 	
 	
@@ -72,14 +57,16 @@
 		
 		
 		
-			<form name="postpic" action="upload.php" method="post" enctype="multipart/form-data">
+			<form name="postpic" method="post" enctype="multipart/form-data">
 
-				Select image to upload:
-				<input type="file" name="fileToUpload" id="fileToUpload">  <?php echo $successPost; ?>
+				Select an image to upload:<br><br>
+				<center><input type="file" name="fileToUpload" id="fileToUpload"></center>
 				<br><br>
-				<input type="submit" value="Upload Image" name="submit">
+				Caption:
+				<input type="text" name="caption" id="caption">
+				<br><br>
+				<center><input type="submit" value="Submit post" name="submit"></center>
 			</form>
-		
 		
 		
 		
@@ -133,11 +120,11 @@ Greg Nesselmann 2016
 
 		foreach ($people as $p) {
 			$html .= "<br><br>";
-			$html .= "<div class='form'> ";
+			$html .= "<div class='pic'> ";
 	
 				//$html .= "<td>". $p->id."</td>";
 				$html .= "<h3>". $p->caption."</h3>";
-				$html .= "<p>"."<img src=".$p->imgurl. ">"."</p>";
+				$html .= "<p>"."<img src=".$p->imgurl. " >"."</p>";
 				$html .= "<br><br>";
 			$html .= "</div>";
 		}

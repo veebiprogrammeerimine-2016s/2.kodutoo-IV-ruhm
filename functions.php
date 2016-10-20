@@ -90,20 +90,20 @@
 		
 	}
 
+	//phpinfo();
 
-
-	/*function submit($caption, $imgurl) {
+	/*function submit($caption) {
 		
 		$database = "if16_greg_4";
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
-		$stmt = $mysqli->prepare("INSERT INTO submissions (caption, imgurl) values (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO submissions (caption) values (?)");
 		
 		echo $mysqli->error;
 		// s -string
 		// i - int
 		// d- double
 		//
-		$stmt->bind_param("ss", $caption, $imgurl);
+		$stmt->bind_param("s", $caption);
 		
 		
 		if ($stmt->execute()) {
