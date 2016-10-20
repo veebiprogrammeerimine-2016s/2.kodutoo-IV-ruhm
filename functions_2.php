@@ -63,6 +63,53 @@
 		return $notice;
 	}
 
+	function saveEvent($place, $duration, $end_duration) 
+	{
+		$mysqli = new mysqli(
+			$GLOBALS["serverHost"], 
+			$GLOBALS["serverUsername"], 
+			$GLOBALS["serverPassword"], 
+			$GLOBALS["database"]);
+
+		$stmt = $mysqli->prepare("
+			INSERT INTO duration (user_id, place, duration, end_duration) VALUES (?, ?, ?, ?)");
+
+		$stmt ->bind_param("isss", $_SESSION["userid"], $place, $duration, $end_duration);
+
+		if ($stmt->execute() ) {
+			echo "õnnestus";
+		} else {
+			echo "ERROR ".$stmt->error;
+		}
+	}
+
+	function getAllPlayers ()
+	{
+		$mysqli = new mysqli(
+			$GLOBALS["serverHost"], 
+			$GLOBALS["serverUsername"], 
+			$GLOBALS["serverPassword"], 
+			$GLOBALS["database"]);
+		$stmt = $mysqli->prepare("
+			SELECT place, duration, end_duration
+			FROM duration
+			");
+
+		$stmt->bind_result($place, $duration, $end_duration);
+		$stmt->execute();
+
+		$results = array();
+		while ($stmt->fetch())	{
+			$player = new StdClass();
+			$player->place = $place;
+			$player->duration = $duration;
+			$player->end_duration = $end_duration;
+
+			array_push($results, $player);
+		}
+		return $results;
+	}
+
 	function cleanInput ($input) 
 	{
 // kustutab alguses ja lõpus olevad tühikud ära
@@ -70,8 +117,8 @@
 // kustutab \ tagurpidi kaldkriipsud
 		$input = stripslashes($input);
 		$input = htmlspecialchars($input);
-// SAMA return htmlspecialchars(stripslashes($input(trim)));
 
+		return $input;
 
 	}
 

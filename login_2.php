@@ -90,17 +90,7 @@
 <body>
 
 	<form method="POST">
-	<h1>Loo kasutaja</h1>		
-
-				<input type="email" placeholder="loo kasutaja" name="signupEmail" value= "<?=$signupEmail;?>"> <?php echo $signupEmailError; ?>
-				
-				<br><br>
-				<input type="password" placeholder="sisesta parool" name="signupPassword"><?php echo $signupPasswordError; ?>
-				
-				<br><br>
-				<input type="submit" value="loo kasutaja">
-
-	</form>
+	
 	<form method="POST">
 	<h1>Logi sisse</h1>
 
@@ -113,6 +103,17 @@
 				
 				<br><br>
 				<input type="submit" value="logi sisse">
+	</form>
+	<h1>Loo kasutaja</h1>		
+
+				<input type="email" placeholder="loo kasutaja" name="signupEmail" value= "<?=$signupEmail;?>"> <?php echo $signupEmailError; ?>
+				
+				<br><br>
+				<input type="password" placeholder="sisesta parool" name="signupPassword"><?php echo $signupPasswordError; ?>
+				
+				<br><br>
+				<input type="submit" value="loo kasutaja">
+
 	</form>
 
 </body>
