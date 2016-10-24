@@ -15,6 +15,7 @@
 	$signupEmailError = "*";
 	$signupEmail = "";
 	
+	
 	//var_dump($_POST);
 	
 	// kas keegi vajutas nuppu ja see on olemas
@@ -75,10 +76,16 @@
 	} 
 	
 	$loginEmailError = "*";
+	$loginEmail = "";
 	if (isset ($_POST["loginEmail"])) {
 		if (empty ($_POST["loginEmail"])) {
 			$loginEmailError = "* Väli on kohustuslik!";
-		}
+		
+		} else {
+			$loginEmail = $_POST["loginEmail"];
+			}
+			
+	
 	}
 	
 	$loginPasswordError = "*";
@@ -134,7 +141,7 @@
 		<form method="POST" >
 		
 			<label>E-post</label><br>
-			<input name="loginEmail" type="email"> <?php echo $loginEmailError; ?>
+			<input name="loginEmail" type="email"  value="<?=$loginEmail;?>" > <?php echo $loginEmailError; ?>
 			<br> <br>
 			<label>Parool</label><br>
 			<input name="loginPassword" type="password"> <?php echo $loginPasswordError; ?>
