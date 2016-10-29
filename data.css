@@ -1,0 +1,77 @@
+html 
+{
+--height: 100%;
+padding: 25px;
+background-color: #000000;
+font-family: 'Lucida Console';
+}
+
+body
+{
+color:green;
+}
+
+h1
+{
+color: green;
+background-color: black;
+}
+
+h2
+{
+color: green;
+background-color: black;
+}
+
+
+
+div.fixed {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+color:white;
+
+}
+
+a
+{
+color:green;
+border-radius: 10px;
+border: 1px solid;	
+padding: 5px; 
+text-decoration:none;
+}
+
+
+
+form.postpic
+{
+font-family: 'Lucida Console';
+border-color:green;
+background-color: green;
+border: 1px solid;
+padding: 50px; 
+}
+
+
+div.form
+{
+position: relative;
+ width: 400px;
+border: 1px solid;
+padding:25px;
+}
+
+div.pic
+{
+position: relative;
+ width: 800px;
+border: 1px solid;
+padding:25px;
+}
+
+
+
+
+
+
