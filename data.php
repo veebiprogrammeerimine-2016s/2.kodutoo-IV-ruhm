@@ -1,7 +1,9 @@
 <?php 
+
 	//ühendan sessiooniga
 	require("functions.php");
 	
+
 	//kui ei ole sisseloginud, suunan login lehele
 	if (!isset($_SESSION["userId"])) {
 		header("Location: login.php");
@@ -31,7 +33,7 @@
 		saveEvent(cleanInput($_POST["age"]), $color);
 	}
 	
-	$people = getAllPeople();
+	$people = getAllExcercise();
 	
 	echo "<pre>";
 	var_dump($people[5]);

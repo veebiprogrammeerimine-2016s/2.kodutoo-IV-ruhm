@@ -90,7 +90,7 @@
 	
 	
 	
-	function saveEvent($age, $color) {
+/*	function saveEvent($age, $color) {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
@@ -105,9 +105,27 @@
 			echo "ERROR ".$stmt->error;
 		}
 		
+	} */
+
+		function saveEvent($email, $datestamp, $excercise, $sets, $reps, $weight) {
+
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+
+		$stmt = $mysqli->prepare("INSERT INTO workouts (email, datestamp, excercise, sets, reps, weight) VALUE (?, ?, ?, ?, ?, ?)");
+		echo $mysqli->error;
+
+		$stmt->bind_param("sssiii", $email, $datestamp, $excercise, $sets, $reps, $weight);
+
+		if ( $stmt->execute() ) {
+			echo "õnnestus";
+		} else {
+			echo "ERROR ".$stmt->error;
+		}
+
 	}
-	
-	function getAllPeople() {
+
+
+/*	function getAllPeople() {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 
@@ -137,9 +155,44 @@
 		
 		return $results;
 		
+	} */
+	
+    function getAllExcercise() {
+
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+
+		$stmt = $mysqli->prepare("
+			SELECT email, datestamp, excercise, sets, reps, weight
+			FROM workouts
+		");
+		$stmt->bind_result($email, $datestamp, $excercise, $sets, $reps, $weight);
+		$stmt->execute();
+
+		$results = array();
+
+		// tsükli sisu tehakse nii mitu korda, mitu rida
+		// SQL lausega tuleb
+		while ($stmt->fetch()) {
+
+			$human = new StdClass();
+            $human->email = $email;
+            $human->datestamp= $datestamp;
+			$human->excercise = $excercise;
+			$human->sets = $sets;
+			$human->reps = $reps;
+			$human->weight = $weight;
+
+
+			//echo $color."<br>";
+			array_push($results, $human);
+
+		}
+
+		return $results;
+
 	}
-	
-	
+
+
 	function cleanInput($input) {
 		
 		// input = "  romil  ";
