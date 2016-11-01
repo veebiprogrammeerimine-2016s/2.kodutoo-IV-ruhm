@@ -27,6 +27,7 @@
 	isset($_POST["sets"]) &&
 	isset($_POST["reps"]) &&
 	isset($_POST["weight"]) &&
+	!empty($_POST["datestamp"]) &&
 	!empty($_POST["exercise"]) &&
 	!empty($_POST["sets"]) &&
 	!empty($_POST["reps"]) &&
@@ -38,9 +39,7 @@
 	
 	$people = getAllExercise();
 	
-	echo "<pre>";
-	var_dump($people[5]);
-	echo "</pre>";
+
 
 ?>
 <h1>Data</h1>
@@ -83,7 +82,7 @@
 </form>
 
 
-<h2>Arhiiv</h2>
+<h2>Archive</h2>
 
 <?php 
 
