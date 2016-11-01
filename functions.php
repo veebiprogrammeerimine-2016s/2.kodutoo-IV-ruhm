@@ -82,39 +82,19 @@
 		
 		return $notice;
 		
-		
-		
-		
-		
+
 	}
-	
-	
-	
-/*	function saveEvent($age, $color) {
-		
-		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
-		
-		$stmt = $mysqli->prepare("INSERT INTO whistle (age, color) VALUE (?, ?)");
-		echo $mysqli->error;
-		
-		$stmt->bind_param("is", $age, $color);
-		
-		if ( $stmt->execute() ) {
-			echo "õnnestus";
-		} else {
-			echo "ERROR ".$stmt->error;
-		}
-		
-	} */
 
-		function saveEvent($email, $datestamp, $excercise, $sets, $reps, $weight) {
+
+	function saveEvent($email, $datestamp, $exercise, $sets, $reps, $weight) {
 
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 
-		$stmt = $mysqli->prepare("INSERT INTO workouts (email, datestamp, excercise, sets, reps, weight) VALUE (?, ?, ?, ?, ?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO workouts (email, datestamp, exercise, sets, reps, weight) VALUES (?, ?, ?, ?, ?, ?)");
 		echo $mysqli->error;
 
-		$stmt->bind_param("sssiii", $email, $datestamp, $excercise, $sets, $reps, $weight);
+		$stmt->bind_param("sssiii", $_SESSION["userEmail"], $datestamp, $exercise, $sets, $reps, $weight);
+        header("Location: data.php");
 
 		if ( $stmt->execute() ) {
 			echo "õnnestus";
@@ -156,16 +136,16 @@
 		return $results;
 		
 	} */
-	
-    function getAllExcercise() {
+
+    function getAllExercise() {
 
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 
 		$stmt = $mysqli->prepare("
-			SELECT email, datestamp, excercise, sets, reps, weight
+			SELECT email, datestamp, exercise, sets, reps, weight
 			FROM workouts
 		");
-		$stmt->bind_result($email, $datestamp, $excercise, $sets, $reps, $weight);
+		$stmt->bind_result($email, $datestamp, $exercise, $sets, $reps, $weight);
 		$stmt->execute();
 
 		$results = array();
@@ -177,7 +157,7 @@
 			$human = new StdClass();
             $human->email = $email;
             $human->datestamp= $datestamp;
-			$human->excercise = $excercise;
+			$human->exercise = $exercise;
 			$human->sets = $sets;
 			$human->reps = $reps;
 			$human->weight = $weight;
@@ -208,31 +188,5 @@
 		return $input;
 		
 	}
-	
-	
-	
-	
-	
-	/*function sum($x, $y) {
-		
-		return $x + $y;
-		
-	}
-	
-	echo sum(12312312,12312355553);
-	echo "<br>";
-	
-	
-	function hello($firstname, $lastname) {
-		return 
-		"Tere tulemast "
-		.$firstname
-		." "
-		.$lastname
-		."!";
-	}
-	
-	echo hello("romil", "robtsenkov");
-	*/
 
 ?>

@@ -19,51 +19,66 @@
 		exit();
 		
 	}
+
+
 	
-	
-	if ( isset($_POST["age"]) && 
-		 isset($_POST["color"]) && 
-		 !empty($_POST["age"]) &&
-		 !empty($_POST["color"]) 
+	if ( isset($_POST["datestamp"]) &&  //kontrollid kas kõik 5 välja üldse eksisteerivad
+	isset($_POST["exercise"]) &&
+	isset($_POST["sets"]) &&
+	isset($_POST["reps"]) &&
+	isset($_POST["weight"]) &&
+	!empty($_POST["exercise"]) &&
+	!empty($_POST["sets"]) &&
+	!empty($_POST["reps"]) &&
+	!empty($_POST["weight"])
 	) {
-		
-		
-		$color = cleanInput($_POST["color"]);
-		
-		saveEvent(cleanInput($_POST["age"]), $color);
-	}
+		echo "õnnestus";
+		saveEvent(($_SESSION["userEmail"]),($_POST["datestamp"]),($_POST["exercise"]), ($_POST["sets"]), ($_POST["reps"]), ($_POST["weight"]));
+	} 
 	
-	$people = getAllExcercise();
+	$people = getAllExercise();
 	
 	echo "<pre>";
 	var_dump($people[5]);
 	echo "</pre>";
-	
+
 ?>
 <h1>Data</h1>
 
-<?php echo$_SESSION["userEmail"];?>
+<?php echo $_SESSION["userEmail"];?>
 
 <?=$_SESSION["userEmail"];?>
 
 <p>
-	Tere tulemast <?=$_SESSION["userEmail"];?>!
-	<a href="?logout=1">logi välja</a>
+	Welcome! <?=$_SESSION["userEmail"];?>!
+	<a href="?logout=1">Log out</a>
 </p>
 
-<h2>Salvesta sündmus</h2>
+<h2>Insert Excercise</h2>
 <form method="POST" >
-	
-	<label>Vanus</label><br>
-	<input name="age" type="number">
+
+	<label>Date</label><br>
+	<input name="datestamp" type="date">
+
+	<br><br>
+	<label>Excercise</label><br>
+	<input name="exercise" type="text">
 	
 	<br><br>
-	<label>Värv</label><br>
-	<input name="color" type="color">
+	<label>Sets</label><br>
+	<input name="sets" type="number">
 	
 	<br><br>
+	<label>Reps</label><br>
+	<input name="reps" type="number">
+
+	<br><br>
+	<label>Weight</label><br>
+	<input name="weight" type="number">
+
+	<br><br>
 	
-	<input type="submit" value="Salvesta">
+	<input type="submit" value="Save">
 
 </form>
 
@@ -76,18 +91,24 @@
 	$html = "<table>";
 	
 		$html .= "<tr>";
-			$html .= "<th>ID</th>";
-			$html .= "<th>Vanus</th>";
-			$html .= "<th>Värv</th>";
+			$html .= "<th>email</th>";
+			$html .= "<th>datestamp</th>";
+			$html .= "<th>exercise</th>";
+			$html .= "<th>sets</th>";
+			$html .= "<th>reps</th>";
+			$html .= "<th>weight</th>";
 		$html .= "</tr>";
 		
 		//iga liikme kohta massiivis
 		foreach ($people as $p) {
 			
 			$html .= "<tr>";
-				$html .= "<td>".$p->id."</td>";
-				$html .= "<td>".$p->age."</td>";
-				$html .= "<td>".$p->lightColor."</td>";
+				$html .= "<td>".$p->email."</td>";
+				$html .= "<td>".$p->datestamp."</td>";
+				$html .= "<td>".$p->exercise."</td>";
+				$html .= "<td>".$p->sets."</td>";
+				$html .= "<td>".$p->reps."</td>";
+				$html .= "<td>".$p->weight."</td>";
 			$html .= "</tr>";
 		
 		}
@@ -95,32 +116,6 @@
 	$html .= "</table>";
 	
 	echo $html;
-
-?>
-
-<h2>Midagi huvitavat</h2>
-
-<?php 
-
-
-	foreach($people as $p) {
-		
-		$style = "
-		
-		    background-color:".$p->lightColor.";
-			width: 40px;
-			height: 40px;
-			border-radius: 20px;
-			text-align: center;
-			line-height: 39px;
-			float: left;
-			margin: 10px;
-		";
-				
-		echo "<p style ='  ".$style."  '>".$p->age."</p>";
-		
-	}
-
 
 ?>
 
