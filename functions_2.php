@@ -15,7 +15,7 @@
 			$GLOBALS["database"]);
 
 		$stmt = $mysqli->prepare("
-			INSERT INTO mvp_161006 (email, password) VALUE (?, ?)");
+			INSERT INTO mvp_161006 (email, password) VALUES (?, ?)");
 		$stmt ->bind_param("ss", $email, $password);
 
 		if ($stmt->execute() ) {
