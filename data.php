@@ -21,12 +21,12 @@
 	}
 
 
-	//Incomplete form errors
-	$savedDate = "";
-	$savedExercise = "";
-	$savedSets = "";
-	$savedReps = "";
-	$savedWeight = "";
+	//Save on error and incomplete form errors
+	$datestamp = "";
+	$exercise = "";
+	$sets = "";
+	$reps = "";
+	$weight = "";
 
 	$emptyDate = "*";
 	$emptyExercise = "*";
@@ -89,10 +89,12 @@ if ( isset($_POST["datestamp"]) &&  //kontrollid kas kõik 5 välja üldse eksis
 		echo "Saved.";
 		saveEvent(($_SESSION["userEmail"]),($_POST["datestamp"]),($_POST["exercise"]), ($_POST["sets"]), ($_POST["reps"]), ($_POST["weight"]));
 	} {
-	// Retain entered data
-/*	$savedDate = $_POST["datestamp"];
-	$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
-	}*/
+	//Retain entered data
+	/*$savedDate = $_POST["datestamp"];
+	$notice = login($_POST["exercise"], $_POST["loginPassword"]); */
+
+
+	}
 	
 	$people = getAllExercise();
 	
@@ -114,23 +116,23 @@ if ( isset($_POST["datestamp"]) &&  //kontrollid kas kõik 5 välja üldse eksis
 <form method="POST" >
 
 	<label>Date</label><br>
-	<input name="datestamp" type="date" value="<?=$savedDate;?>"> <?php echo $emptyDate; ?>
+	<input name="datestamp" type="date" value="<?=$datestamp;?>"> <?php echo $emptyDate; ?>
 
 	<br><br>
 	<label>Excercise</label><br>
-	<input name="exercise" type="text" value="<?=$savedExercise;?>"> <?php echo $emptyExercise; ?>
+	<input name="exercise" type="text" value="<?=$exercise;?>"> <?php echo $emptyExercise; ?>
 	
 	<br><br>
 	<label>Sets</label><br>
-	<input name="sets" type="number" value="<?=$savedSets;?>"> <?php echo $emptySets; ?>
+	<input name="sets" type="number" value="<?=$sets;?>"> <?php echo $emptySets; ?>
 	
 	<br><br>
 	<label>Reps</label><br>
-	<input name="reps" type="number" value="<?=$savedReps;?>"> <?php echo $emptyReps; ?>
+	<input name="reps" type="number" value="<?=$reps;?>"> <?php echo $emptyReps; ?>
 
 	<br><br>
 	<label>Weight</label><br>
-	<input name="weight" type="number" value="<?=$savedWeight;?>"> <?php echo $emptyWeight; ?>
+	<input name="weight" type="number" value="<?=$weight;?>"> <?php echo $emptyWeight; ?>
 
 	<br><br>
 	
@@ -172,5 +174,5 @@ if ( isset($_POST["datestamp"]) &&  //kontrollid kas kõik 5 välja üldse eksis
 	$html .= "</table>";
 	
 	echo $html;
-	}
+
 ?>
