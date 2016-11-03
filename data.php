@@ -64,10 +64,6 @@
 	<label>Värv</label><br>
 	<input name="color" type="color">
 
-	<br><br>
-	<label>Nimi</label><br>
-	<input name="name" type="text">
-
 	<br<br>
 
 	<input type="submit" value="Salvesta">
@@ -84,7 +80,7 @@
 
 		$html .= "<tr>";
 			$html .= "<th>ID</th>";
-			$html .= "<th>points</th>";
+			$html .= "<th>Punktid</th>";
 			$html .= "<th>Värv</th>";
 		$html .= "</tr>";
 
