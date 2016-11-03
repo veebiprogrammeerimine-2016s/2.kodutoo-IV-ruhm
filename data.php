@@ -21,8 +21,61 @@
 	}
 
 
-	
-	if ( isset($_POST["datestamp"]) &&  //kontrollid kas kõik 5 välja üldse eksisteerivad
+	//Incomplete form errors
+	$savedDate = "";
+	$savedExercise = "";
+	$savedSets = "";
+	$savedReps = "";
+	$savedWeight = "";
+
+	$emptyDate = "*";
+	$emptyExercise = "*";
+	$emptySets = "*";
+	$emptyReps = "*";
+	$emptyWeight = "*";
+
+if (isset ($_POST["datestamp"])) {
+	if (empty ($_POST["datestamp"])) {
+		$emptyDate = "* Please fill in date!";
+	} else {
+		$datestamp = $_POST["datestamp"];
+	}
+}
+
+if (isset ($_POST["exercise"])) {
+	if (empty ($_POST["exercise"])) {
+		$emptyDate = "* Please fill in exercise!";
+	} else {
+		$exercise = $_POST["exercise"];
+	}
+}
+
+if (isset ($_POST["sets"])) {
+	if (empty ($_POST["sets"])) {
+		$emptyDate = "* Please fill in sets!";
+	} else {
+		$sets = $_POST["sets"];
+	}
+}
+
+if (isset ($_POST["reps"])) {
+	if (empty ($_POST["reps"])) {
+		$emptyDate = "* Please fill in reps!";
+	} else {
+		$reps = $_POST["reps"];
+	}
+}
+
+if (isset ($_POST["weight"])) {
+	if (empty ($_POST["weight"])) {
+		$emptyDate = "* Please fill in weight!";
+	} else {
+		$weight = $_POST["weight"];
+	}
+}
+
+
+if ( isset($_POST["datestamp"]) &&  //kontrollid kas kõik 5 välja üldse eksisteerivad
 	isset($_POST["exercise"]) &&
 	isset($_POST["sets"]) &&
 	isset($_POST["reps"]) &&
@@ -33,9 +86,13 @@
 	!empty($_POST["reps"]) &&
 	!empty($_POST["weight"])
 	) {
-		echo "õnnestus";
+		echo "Saved.";
 		saveEvent(($_SESSION["userEmail"]),($_POST["datestamp"]),($_POST["exercise"]), ($_POST["sets"]), ($_POST["reps"]), ($_POST["weight"]));
-	} 
+	} {
+	// Retain entered data
+/*	$savedDate = $_POST["datestamp"];
+	$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
+	}*/
 	
 	$people = getAllExercise();
 	
@@ -57,23 +114,23 @@
 <form method="POST" >
 
 	<label>Date</label><br>
-	<input name="datestamp" type="date">
+	<input name="datestamp" type="date" value="<?=$savedDate;?>"> <?php echo $emptyDate; ?>
 
 	<br><br>
 	<label>Excercise</label><br>
-	<input name="exercise" type="text">
+	<input name="exercise" type="text" value="<?=$savedExercise;?>"> <?php echo $emptyExercise; ?>
 	
 	<br><br>
 	<label>Sets</label><br>
-	<input name="sets" type="number">
+	<input name="sets" type="number" value="<?=$savedSets;?>"> <?php echo $emptySets; ?>
 	
 	<br><br>
 	<label>Reps</label><br>
-	<input name="reps" type="number">
+	<input name="reps" type="number" value="<?=$savedReps;?>"> <?php echo $emptyReps; ?>
 
 	<br><br>
 	<label>Weight</label><br>
-	<input name="weight" type="number">
+	<input name="weight" type="number" value="<?=$savedWeight;?>"> <?php echo $emptyWeight; ?>
 
 	<br><br>
 	
@@ -115,6 +172,5 @@
 	$html .= "</table>";
 	
 	echo $html;
-
+	}
 ?>
-

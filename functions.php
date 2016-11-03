@@ -2,7 +2,7 @@
 
 	require("../../config.php");
 	
-	// see fail peab olema siis seotud kõigiga kus
+	// see fail peab olema siis seotud kõigiga kusb
 	// tahame sessiooni kasutada
 	// saab kasutada nüüd $_SESSION muutujat
 	session_start();
@@ -111,8 +111,9 @@
 
 		$stmt = $mysqli->prepare("
 			SELECT email, datestamp, exercise, sets, reps, weight
-			FROM workouts
+			FROM workouts WHERE email=?
 		");
+        $stmt->bind_param("s", $_SESSION["userEmail"]);
 		$stmt->bind_result($email, $datestamp, $exercise, $sets, $reps, $weight);
 		$stmt->execute();
 
