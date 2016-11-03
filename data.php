@@ -8,30 +8,31 @@
 		exit();
 	}
 
-
 	//kas aadressireal on logout
 	if (isset($_GET["logout"])) {
 
 		session_destroy();
 
-	  header("Location: login.php");
+		header("Location: login.php");
 		exit();
 
 	}
 
 
-
-	if (isset($_POST["color"]) &&
-			isset($_POST["age"]) &&
-			!empty($_POST["color"]) &&
-			!empty($_POST["age"])
+	if ( isset($_POST["points"]) &&
+		 isset($_POST["color"]) &&
+		 !empty($_POST["points"]) &&
+		 !empty($_POST["color"])
 	) {
 
-			$color = cleanInput($_POST["color"]);
-			saveEvent(cleanInput($_POST["color"], $_POST["age"]), $color);
+
+		$color = cleanInput($_POST["color"]);
+
+		saveEvent(cleanInput($_POST["points"]), $color);
 	}
 
-	$people = getAllpeople();
+	$people = getAllPeople();
+
 	echo "<pre>";
 	var_dump($people);
 	echo "</pre>";
@@ -44,52 +45,63 @@
 <?=$_SESSION["userEmail"];?>
 
 <p>
-	Tere tulemast <?=$_SESSION["userEmail"];?>!
+	Tere tulemast <a href="user.php"><?=$_SESSION["userEmail"];?></a>!
 	<a href="?logout=1">logi välja</a>
 </p>
 
+<h1>Anna oma üürikorterile hinnang</h1>
 
-	<form method= "POST" >
-		<label>Choose color</label><br>
-		<input name="color" type="color">
+<p>
+	Palun anna oma endisele üürikorterile hinnang ühest kümneni
+</p>
 
-		<br><br>
+<form method="POST" >
 
-		<label>Choose age</label><br>
-		<input name="age" placeholder="age" type="number">
+	<label>Punktid (1-10)</label><br>
+	<input name="points" type="number">
 
-		<br><br>
+	<br><br>
+	<label>Värv</label><br>
+	<input name="color" type="color">
 
-		<input type="submit" value="Save">
+	<br><br>
+	<label>Nimi</label><br>
+	<input name="name" type="text">
 
-	</form>
+	<br<br>
+
+	<input type="submit" value="Salvesta">
+
+</form>
+
 
 <h2>Arhiiv</h2>
 
 <?php
 
- $html ="<table>";
- 	$html .="<tr>";
-		$html .="<th>ID</th>";
-		$html .="<th>Vanus</th>";
-		$html .="<th>Värv</th>";
-	$html .="</tr>";
-	//iga liikme kohta massiivis($people)
-	foreach ($people as $p) {
 
-		$html .="<tr>";
-	 		$html .="<td>".$p->id."</td>";
-	 		$html .="<td>".$p->lightcolor."</td>";
-	 		$html .="<td>".$p->age."</td>";
-	 	$html .="</tr>";
+	$html = "<table>";
 
-	}
+		$html .= "<tr>";
+			$html .= "<th>ID</th>";
+			$html .= "<th>points</th>";
+			$html .= "<th>Värv</th>";
+		$html .= "</tr>";
 
+		//iga liikme kohta massiivis
+		foreach ($people as $p) {
 
- $html .="</table>";
+			$html .= "<tr>";
+				$html .= "<td>".$p->id."</td>";
+				$html .= "<td>".$p->points."</td>";
+				$html .= "<td>".$p->lightColor."</td>";
+			$html .= "</tr>";
 
- echo $html;
+		}
 
+	$html .= "</table>";
+
+	echo $html;
 
 ?>
 
@@ -97,24 +109,24 @@
 
 <?php
 
- foreach($people as $p) {
-	 $style = "
 
-	 background-color:".$p->lightcolor.";
-	 width: 40px;
-	 height: 40px;
-	 border-radius: 20px;
-	 text-align: center;
-	 line-height: 39px;
-	 float: left;
-	 margin: 20px;
+	foreach($people as $p) {
 
-	 ";
+		$style = "
 
-	 echo"<p style =' ".$style." '>".$p->age."</p>";
- }
+		    background-color:".$p->lightColor.";
+			width: 40px;
+			height: 40px;
+			border-radius: 20px;
+			text-align: center;
+			line-height: 39px;
+			float: left;
+			margin: 10px;
+		";
 
+		echo "<p style ='  ".$style."  '>".$p->points."</p>";
 
+	}
 
 
 ?>

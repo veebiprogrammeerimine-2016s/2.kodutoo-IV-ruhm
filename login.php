@@ -147,7 +147,7 @@
 		<form method="POST" >
 
 
-			<input name="loginEmail" placeholder="E-post" type="email" value="<?=$loginEmail;?>">
+			<input name="loginEmail" placeholder="E-post" type="email">
 
 			<br><br>
 
