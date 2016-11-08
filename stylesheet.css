@@ -8,13 +8,8 @@ body {
 	 /* IE 10+ */background: linear-gradient(135deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
 	/* W3C */filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efffde', endColorstr='#ffffff', GradientType=1 );
 	/* IE6-9 fallback on horizontal gradient */
-}
-
-.wrapper {
-	width: 960px;	
-	background-color: white;
-	margin: 0px auto 0px auto;
-	overflow: auto;
+	letter-spacing: 1px;
+	font-variant: small-caps;
 }
 
 header {
@@ -28,10 +23,34 @@ header {
 
 h1 {
 	padding:25px;
-	font-variant: small-caps;
 }
 
-.loginBox {
+.wrapper {
+	width: 960px;
+	min-height: 800px;
+	background-color: white;
+	margin: 0px auto 0px auto;
+	overflow: auto;
+}
+
+a {
+	width: 90px;
+	height: 23px;
+	text-align: center;
+	color: #e60000;
+	background-color: #efffde;
+	border-radius: 0px 0px 5px 5px;
+	margin: 0px 10px auto auto;
+	display: block;
+	text-decoration: none;
+	letter-spacing: normal;
+}
+
+a:hover {
+	font-weight: bold;
+}
+
+.boxU {
 	text-align: center;
 	background-color: #efffde;
 	margin: 50px 25px 25px 25px;
@@ -39,7 +58,19 @@ h1 {
 	padding: 25px;
 }
 
-.signUpBox {
+.onOffer {
+	text-align: center;
+	background-color: #efffde;
+	margin: 27px 25px 25px 25px;
+	border-radius: 5px;
+	padding: 25px;
+}
+
+.onOffer > p {
+	font-weight: bold;
+}
+
+.boxL {
 	text-align: center;
 	background-color: #efffde;
 	margin: 0px 25px 25px 25px;
@@ -53,11 +84,47 @@ h1 {
 	padding-right: 200px;
 }
 
+.word {
+	text-align: center;
+	padding-left: 200px;
+	padding-right: 200px;
+}
 
+.formVariety {
+	width: 150px;
+}
 
+.formLocation {
+	width: 300px;
+}
 
-footer p {
+.formNumber {
+	width: 60px;
+	text-align: right;
+}
+
+table {
+	width: 100%;
+}
+
+th {
+	height: 50px;
+}
+
+tr {
+	background-color: #ffffff;
+	text-align: center;
+	height: 36px;
+}
+
+td {
+	font-variant: normal;
+}
+
+footer > p {
 	text-align: center;
 	margin-top: 100px;
 	margin-bottom: 50px;
 }
+
+
