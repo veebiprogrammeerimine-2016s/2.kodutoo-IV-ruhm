@@ -117,7 +117,7 @@
 		$input = trim($input);
 		
 		//võtab välja "\"
-		//$input = stripslashes($input);
+		$input = stripslashes($input);
 		
 		//html asendused nt.\ asemel unicode
 		$input = htmlspecialchars($input);

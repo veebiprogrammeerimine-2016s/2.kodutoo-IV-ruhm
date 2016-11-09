@@ -53,7 +53,7 @@
 	
 	if (isset ($_POST["price"])) {
 
-		if (empty ($_POST["price"])) {
+		if ($_POST["price"] == "" ) {
 			
 			$priceError="Kui soovite õunad tasuta ära anda sisestage palun null!";
 		}
@@ -63,10 +63,10 @@
 	     isset($_POST["location"]) &&
 		 isset($_POST["quantity"]) &&
 		 isset($_POST["price"]) &&
-	     !empty($_POST["variety"]) &&
-		 !empty($_POST["location"]) &&
-		 !empty($_POST["quantity"]) &&
-	     !empty($_POST["price"])
+		 $varietyError == "" &&
+		 $locationError == "" &&
+		 $quantityError == "" &&
+	     $priceError == ""
 	) {
 		$variety = cleanInput($_POST["variety"]);
 		$location = cleanInput($_POST["location"]);
