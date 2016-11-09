@@ -59,7 +59,7 @@
 <html>
 		
 	<head>
-	<title>Sisselogimise leht alala</title>
+	<title>Sisselogimise leht</title>
 		
 		<center>
 		<style>	
