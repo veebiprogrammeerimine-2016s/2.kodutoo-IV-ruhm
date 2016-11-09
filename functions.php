@@ -1,7 +1,7 @@
 <?php
 	
 	require("../../config.php");
-	session_start();
+	session_start();   
 	
 	$database = "if16_ksenbelo_4";
 	//MUUTUJAD
