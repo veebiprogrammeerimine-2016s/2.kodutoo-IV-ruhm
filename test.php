@@ -1,10 +1,9 @@
-
-
 <?php
 	include('header.php');
-	include('footer.php');
-	require("../../config.php");
+	
+	
 	require("functions.php");
+	$Functions = new functions($mysqli);
 	require("dijkstra.php");
 
 	$start ="";
@@ -14,7 +13,14 @@
 	$startFloorError = "";
 	$finishFloorError = "";
 	
+	var_dump($Functions->mostUsed("start"));
+?>
+	 <br>
+	 
+<?php
 
+
+	var_dump($Functions->mostUsed("finish"));
 	
 	
 	
@@ -90,7 +96,7 @@
 				
 				echo "<img src=".$startFloor.".jpg height=90%; width=100%;/>";
 				echo "Roheline täpp on algus ja punane lõpp";
-				submit($start,$finish);
+				$Functions->submit($start,$finish);
 				
 				header("Location: test.php?s=$start&f=$finish");
 				
@@ -160,11 +166,9 @@
 
 		
 
-		if (numberDoesExist($startnumber, $points) and numberDoesExist($finishnumber, $points))
+		if ($Functions->numberDoesExist($startnumber, $points) and $Functions->numberDoesExist($finishnumber, $points))
 		{
 
-		
-		
 			$matrixWidth = 700;
 		
 			/*$points = array(
@@ -224,9 +228,8 @@
 			
 				
 			echo '</pre>';
-				//var_dump(mostUsed("start"));
-				//var_dump(mostUsed("finish"));
-				
+			
+			
 
 		}
 		else
@@ -244,40 +247,119 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<H1>TLÜ GPS</H1>
+	
 	<H2>Kus asud ?</H2>
 	<form method="POST">
 	<input name="start" placeholder="Start" value="<?php echo $start;?>" type="text"><br><?php echo $startError; echo $startFloorError;?>
+<?php
+	$mostUsed = $Functions->mostUsed("start");
+		foreach ($mostUsed as $p) {
+			$html = "<table>";	
+			$html .= "<tr>";
+				$html .= "<th>".$p->start."__</th>";
+				$html .= "<th>".$p->start."__</th>";
+				$html .= "<th>".$p->start."</th>";
+			$html .= "</tr>";
+		}
+		$html .= "</table>";
+	echo $html;
+?>
+	
+	
 	<br>
-	<H2>Kuhu soovid minna?</H2>
+	
+	<H2>Kuhu soovid minna ?</H2>
 	<input name="finish" placeholder="Finish" value="<?php echo $finish;?>" type="text"><br><?php echo $finishError; echo $finishFloorError;?>
+<?php
+	$mostUsed = $Functions->mostUsed("finish");
+		foreach ($mostUsed as $p) {
+			$html = "<table>";	
+			$html .= "<tr>";
+				$html .= "<th>".$p->start."__</th>";
+				$html .= "<th>".$p->start."__</th>";
+				$html .= "<th>".$p->start."</th>";
+			$html .= "</tr>";
+		}
+		$html .= "</table>";
+	echo $html;
+?>
 	<br><br>
-	<input type="submit" value="Submit">
+	
+	<input type="submit" value="Otsi">
 	</form>
-</BODY>
+
+	<br>
+
+	
+<H2>Otsingute tabel</H2>
+<?php
+
+
+	
+	if(isset($_GET["q"])){
+
+		$q =$_GET["q"];
+		
+	}else{
+		//ei otsi
+		$q="";
+	
+	}
+	$sort = "start";
+	$order = "ASC";
+	
+	if(isset($_GET["sort"]) && isset($_GET["order"])){
+		
+		$sort = $_GET["sort"];
+		$order = $_GET["order"];
+	}
+	
+	
+	
+	$orderId = "ASC";
+	$arr= "&darr;";
+	if (isset($_GET["order"]) && $_GET["order"]== "ASC" && $_GET["sort"]=="start"){
+			$orderId = "DESC";
+			$arr= "&uarr;";
+	}
+
+
+	
+	
+	
+	
+	
+	$startTable = $Functions->startTable($q , $sort , $order);
+	
+		$html = "<table class='table table-striped table-condensed'>";
+	
+		$html .= "<tr>";
+			$html .= "<th><a href='?q=".$q."&sort=id&order=".$orderId."'>Otsitav".$arr."</th>";
+				
+			$html .= "<th><a href='?q=".$q."&sort=id&order=".$orderId."'>Kogus".$arr."</th>";
+
+		$html .= "</tr>";
+		
+		//iga liikme kohta massiivis
+		foreach ($startTable as $p) {
+			
+			$html .= "<tr>";
+				$html .= "<td>".$p->start."</td>";
+				//$html .= "<td>".$p->count."</td>";
+ 
+			$html .= "</tr>";
+			$html .= "<tr>";
+				$html .= "<td>".$p->fstart."</td>";
+				//$html .= "<td>".$p->fcount."</td>";
+ 
+			$html .= "</tr>";
+		
+		}
+		
+		$html .= "</table>";
+	
+	echo $html;
+?>
+	
+<?php include('footer.php');?>
