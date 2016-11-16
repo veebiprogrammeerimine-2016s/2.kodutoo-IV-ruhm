@@ -13,14 +13,14 @@
 	$startFloorError = "";
 	$finishFloorError = "";
 	
-	var_dump($Functions->mostUsed("start"));
+	//var_dump($Functions->mostUsed("start"));
 ?>
 	 <br>
 	 
 <?php
 
 
-	var_dump($Functions->mostUsed("finish"));
+	//var_dump($Functions->mostUsed("finish"));
 	
 	
 	
@@ -254,14 +254,16 @@
 	<input name="start" placeholder="Start" value="<?php echo $start;?>" type="text"><br><?php echo $startError; echo $startFloorError;?>
 <?php
 	$mostUsed = $Functions->mostUsed("start");
-		foreach ($mostUsed as $p) {
-			$html = "<table>";	
-			$html .= "<tr>";
-				$html .= "<th>".$p->start."__</th>";
-				$html .= "<th>".$p->start."__</th>";
-				$html .= "<th>".$p->start."</th>";
-			$html .= "</tr>";
+	
+	$html = "<table>";	
+	$html .= "<tr>";
+	foreach ($mostUsed as $p) {
+			
+			
+				$html .= "<th>".$p->start."&nbsp;</th>";
+			
 		}
+		$html .= "</tr>";
 		$html .= "</table>";
 	echo $html;
 ?>
@@ -273,14 +275,15 @@
 	<input name="finish" placeholder="Finish" value="<?php echo $finish;?>" type="text"><br><?php echo $finishError; echo $finishFloorError;?>
 <?php
 	$mostUsed = $Functions->mostUsed("finish");
+		$html = "<table>";	
+		$html .= "<tr>";
 		foreach ($mostUsed as $p) {
-			$html = "<table>";	
-			$html .= "<tr>";
-				$html .= "<th>".$p->start."__</th>";
-				$html .= "<th>".$p->start."__</th>";
-				$html .= "<th>".$p->start."</th>";
-			$html .= "</tr>";
+			
+				$html .= "<th>".$p->start."&nbsp;</th>";
+				
+			
 		}
+		$html .= "</tr>";
 		$html .= "</table>";
 	echo $html;
 ?>
@@ -323,9 +326,33 @@
 			$orderId = "DESC";
 			$arr= "&uarr;";
 	}
-
-
+	if (isset($_GET["order"]) && $_GET["order"]== "ASC" && $_GET["sort"]=="finish"){
+			$orderId = "DESC";
+			$arr= "&uarr;";
+	}
+	if (isset($_GET["order"]) && $_GET["order"]== "ASC" && $_GET["sort"]=="kogus"){
+			$orderId = "DESC";
+			$arr= "&uarr;";
+	}
 	
+
+	if (isset ($_GET["start"]) && ($_GET["finish"])){
+		
+		$start=$_GET["start"];
+		$finish=$_GET["finish"];
+		$Functions->deleteButton($start,$finish);
+	}
+	if (isset ($_GET["success"])){
+		
+		
+		echo "Kustutasin teekonna ";
+		
+?>
+	 <br>
+	 
+<?php
+		
+	}
 	
 	
 	
@@ -335,9 +362,13 @@
 		$html = "<table class='table table-striped table-condensed'>";
 	
 		$html .= "<tr>";
-			$html .= "<th><a href='?q=".$q."&sort=id&order=".$orderId."'>Otsitav".$arr."</th>";
+			$html .= "<th><a href='?q=".$q."&sort=start&order=".$orderId."'>start".$arr."</th>";
+			
+			$html .= "<th><a href='?q=".$q."&sort=finish&order=".$orderId."'>finish".$arr."</th>";
 				
-			$html .= "<th><a href='?q=".$q."&sort=id&order=".$orderId."'>Kogus".$arr."</th>";
+			$html .= "<th><a href='?q=".$q."&sort=kogus&order=".$orderId."'>Kogus".$arr."</th>";
+			
+			$html .= "<th>Edit</th>";
 
 		$html .= "</tr>";
 		
@@ -346,12 +377,9 @@
 			
 			$html .= "<tr>";
 				$html .= "<td>".$p->start."</td>";
-				//$html .= "<td>".$p->count."</td>";
- 
-			$html .= "</tr>";
-			$html .= "<tr>";
-				$html .= "<td>".$p->fstart."</td>";
-				//$html .= "<td>".$p->fcount."</td>";
+				$html .= "<td>".$p->finish."</td>";
+				$html .= "<td>".$p->count."</td>";
+				$html .= "<td><a href='test.php?start=".$p->start."&finish=".$p->finish."'> nupp</a></td>";
  
 			$html .= "</tr>";
 		

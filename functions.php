@@ -7,24 +7,29 @@
 	$mysqli = new mysqli($serverHost, $serverUsername, $serverPassword, $database);
 
 
-
-
 class functions{
 	
 
 	private $connection;
 		//käivitab siia kui on =new User(see jõuab siia)
-		function __construct($mysqli){
+	function __construct($mysqli){
 			
-			$this->connection = $mysqli;
-		}	
+		$this->connection = $mysqli;
+	}	
 	
-	function submit($start,$finish)
-	{
+	
+	
+	
+	
+	
+	
+	
+	
+	function submit($start,$finish){
 		
 		
 		
-		$allowedSubmits = ["id","age","color"];
+		$allowedSubmits = ["start","finish"];
 		
 		$stmt = $this->connection->prepare("
 		INSERT INTO gps (start, finish) 
@@ -45,6 +50,11 @@ class functions{
 		}
 	}
 	
+	
+	
+	
+	
+	
 	function numberDoesExist($nr, $points){
 		foreach($points as $p){
 			if (in_array($nr,$p)){
@@ -56,6 +66,11 @@ class functions{
 	}
 	
 	
+	
+	
+	
+	
+	
 	function mostUsed($filter) {
 	
 	
@@ -65,13 +80,16 @@ class functions{
 		{
 			echo "error ----";
 			return;
-		}
+		}else{
 			
 			$stmt = $this->connection->prepare("
-				SELECT $filter,count($filter) 
-				FROM gps 
-				GROUP BY $filter
-				ORDER BY COUNT($filter) DESC LIMIT 1
+				SELECT distinct($filter)
+				FROM gps
+				WHERE deleted is NULL				
+				ORDER BY $filter DESC limit 3
+				
+				
+				
 				
 			");
 			//SESSION USER ID
@@ -80,7 +98,7 @@ class functions{
 			
 			echo $this->connection->error;
 			
-			$stmt->bind_result($start, $count);
+			$stmt->bind_result($start);
 			$stmt->execute();
 			
 			
@@ -95,25 +113,26 @@ class functions{
 				$used = new StdClass();
 				
 				$used->start = $start;
-				$used->count = $count;
+				
+				//$used->count = $count;
 			
 				array_push($result, $used);
 			}
 			$stmt->close();
 			return $result;
-			
+		}	
 		
 	}
 	
 	
-	function startTable($q , $sort,$order) {
+	function startTable($q, $sort, $order) {
 
 
-		$allowedSort = ["start","finish"];
+		$allowedSort = ["start","finish","kogus"];
 		
 		//sort ei kuulu lubatud valikute alla
 		if (!in_array($sort, $allowedSort)){
-			$sort = "start";
+			$sort = "kogus";
 		}
 		$orderBy = "ASC";
 		
@@ -129,15 +148,15 @@ class functions{
 				
 
 			$stmt = $this->connection->prepare("
-			SELECT start, finish
-			FROM gps limit 3
+			SELECT start,finish,count(*)as kogus
+			FROM gps
 			WHERE deleted IS NULL
-			AND (start LIKE ? OR finish LIKE ?)
+			GROUP BY start,finish
 			ORDER BY $sort $orderBy
 			");
 			
-			$searchWord= "%".$q."%";
-			$stmt->bind_param("ss", $searchWord, $searchWord);
+			//$searchWord= "%".$q."%";
+			//$stmt->bind_param("ss", $searchWord, $searchWord);
 			
 			
 			
@@ -147,15 +166,18 @@ class functions{
 			
 			//ei otsi
 			$stmt = $this->connection->prepare("
-			SELECT start, finish
-			FROM gps limit 3
+			SELECT start,finish,count(*)as kogus
+			FROM gps
+			WHERE deleted is NULL
+			GROUP BY start,finish
+			ORDER BY $sort $orderBy
 			");
 			
 			
 		}
 		
 		
-		$stmt->bind_result($startPlace,$finishPlace);
+		$stmt->bind_result($startPlace,$finishPlace,$count);
 		$stmt->execute();
 		
 		$results = array();
@@ -167,8 +189,8 @@ class functions{
 			$tabel = new StdClass();
 			$tabel->start = $startPlace;
 			//$tabel->count = $startCount;
-			$tabel->fstart = $finishPlace;
-			//$tabel->fcount = $finishCount;
+			$tabel->finish = $finishPlace;
+			$tabel->count = $count;
 			
 			
 			//echo $color."<br>";
@@ -180,7 +202,21 @@ class functions{
 		
 	}
 	
-	
+	function deleteButton($start,$finish){
+		
+
+		$stmt = $this->connection->prepare("UPDATE gps SET deleted =NOW() WHERE start=? AND finish = ?");
+		$stmt->bind_param("ss", $start, $finish);
+		
+		// kas õnnestus salvestada
+		if($stmt->execute()){
+			// õnnestus
+			
+			header("Location: test.php?success=true");
+		}
+		
+		$stmt->close();
+	}
 	
 }
 ?>
