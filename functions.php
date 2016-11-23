@@ -80,9 +80,9 @@
 		$GLOBALS["serverPassword"], 
 		$GLOBALS["database"]);
 		
-		$stmt = $mysqli ->prepare("INSERT INTO user_food_finish (username, birthday, food) VALUE(?, ?, ?)");
+		$stmt = $mysqli ->prepare("INSERT INTO user_food_finish (username, birthday, food, user_id) VALUE(?, ?, ?, ?)");
 		echo $mysqli->error;
-		$stmt->bind_param("sss", $username, $birthday, $food);
+		$stmt->bind_param("sssi", $username, $birthday, $food, $_SESSION["userId"]);
 	
 		if($stmt->execute() ) {
 			
@@ -99,11 +99,11 @@
 		$GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("
-		SELECT id, username, birthday, food
-		FROM user_food_finish
+		SELECT id, username, birthday, food, user_id
+		FROM user_food_finish 
 		");
 		
-		$stmt->bind_result($id, $username, $birthday, $food);
+		$stmt->bind_result($id, $username, $birthday, $food, $user_id);
 		$stmt->execute();
 		
 		$results = array();
@@ -111,10 +111,13 @@
 		while ($stmt->fetch()) {
 			
 			$human = new StdClass();
+			$human->id = $id;
 			$human->username = $username;
 			$human->birthday = $birthday;
 			$human->food = $food;
-			$human->id = $id;
+			$human->user_id = $user_id;
+			
+			
 			
 			array_push($results, $human);	
 		}

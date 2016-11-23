@@ -134,20 +134,22 @@
 $html = "<table>";
 	
 		$html .= "<tr>";
+			$html .= "<th>ID</th>";
 			$html .= "<th>Kasutaja</th>";
 			$html .= "<th>Sünniaasta</th>";
 			$html .= "<th>Köök</th>";
-			$html .= "<th>ID</th>";
+			$html .= "<th>TEST</th>";	
 		$html .= "</tr>";
 		
 		//iga liikme kohta massiivis
 		foreach ($people as $p) {
 			
 			$html .= "<tr>";
+				$html .= "<td>".$p->id."</td>";
 				$html .= "<td>".$p->username."</td>";
 				$html .= "<td>".$p->birthday."</td>";
 				$html .= "<td>".$p->food."</td>";
-				$html .= "<td>".$p->id."</td>";
+				$html .= "<td>".$p->user_id."</td>";	
 			$html .= "</tr>";
 		
 		}
