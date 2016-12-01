@@ -55,7 +55,7 @@
 		 !empty($_POST["date"])&&
 		 !empty($_POST["location"])
 		 ) {
-			 saveEvent($_POST["event"], $_POST["date"], $_POST["location"]);
+			 saveEvent (cleanInput($_POST["event"]), cleanInput($_POST["date"]), cleanInput($_POST["location"]));
 			 
 			 header("Location: data.php");
 			 

@@ -114,7 +114,7 @@
 			
 			
 			
-		signup($signupEmail, $password, $gender, $_POST["birthdate"]);
+		signup(cleanInput($_POST["signupEmail"]), cleanInput($_POST["signupPassword"]), cleanInput($_POST["gender"]), cleanInput($_POST["birthdate"]));
 		}
 	$notice = "";
 	//kas kasutaja tahab sisse logida
@@ -124,7 +124,7 @@
 		 !empty($_POST["loginPassword"])
 	
 	) {
-		$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
+		$notice = login(cleanInput($_POST["loginEmail"]), cleanInput($_POST["loginPassword"]));
 	}
 
  
