@@ -6,7 +6,7 @@
 	// saab kasutada nüüd $_SESSION muutujat
 	session_start();
 	
-	$database = "andrkalj_4";
+	$database = "if16_andrkalj_4";
 	// functions.php
 	
 	function signup($email, $password) {
@@ -62,7 +62,6 @@
 				//echo "ERROR";
 				
 				header("Location: data.php");
-				
 				exit();
 				
 			} else {
@@ -139,21 +138,19 @@
 	}
 	
 	
-	function cleanInput ($input)  {
+	function cleanInput($input) {
 		
-	
 		// input = "  andra  ";
 		$input = trim($input);
-		// input "andra";
+		// input = "andra";
 		
-		//võtab välja \
+		// võtab välja \
 		$input = stripslashes($input);
 		
-		//html asendab nt "<" saab "&lt;"
+		// html asendab, nt "<" saab "&lt;"
 		$input = htmlspecialchars($input);
 		
 		return $input;
-		
 		
 	}
 	

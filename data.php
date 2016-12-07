@@ -1,14 +1,47 @@
-<?php 
-	//ühendan sessiooniga
+<?php
+echo date("d.m.Y");
+?>
+<html>
+<head>
+<style type="text/css">
+#clock {color:black;}
+
+
+</style>
+<script type="text/javascript">
+
+function updateClock (){
+  var currentTime = new Date ( );
+  var currentHours = currentTime.getHours ();
+  var currentMinutes = currentTime.getMinutes ();
+  var currentSeconds = currentTime.getSeconds();
+  currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+  currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+  var timeOfDay = ''; 
+
+  var currentTimeString = currentHours + ":" + currentMinutes + ':' + currentSeconds+ " " + timeOfDay;
+
+  document.getElementById("clock").innerHTML = currentTimeString;
+}
+
+</script>
+</head>
+
+<body onLoad="updateClock(); setInterval('updateClock()', 1000 )">
+<span id="clock">&nbsp;</span>
+</body>
+
+</html>
+<?php
+
+//Ã¼hendan sessiooniga
 	require("functions.php");
 	
 	//kui ei ole sisseloginud, suunan login lehele
 	if (!isset($_SESSION["userId"])) {
 		header("Location: login.php");
+		exit();
 	}
-	exit();
-	
-	
 	
 	//kas aadressireal on logout
 	if (isset($_GET["logout"])) {
@@ -16,15 +49,17 @@
 		session_destroy();
 		
 		header("Location: login.php");
+		exit();
 		
 	}
-	exit();
+	
 	
 	if ( isset($_POST["age"]) && 
 		 isset($_POST["color"]) && 
 		 !empty($_POST["age"]) &&
 		 !empty($_POST["color"]) 
 	) {
+		
 		
 		$color = cleanInput($_POST["color"]);
 		
@@ -40,23 +75,19 @@
 ?>
 <h1>Data</h1>
 
-<?php echo$_SESSION["userEmail"];?>
-
-<?=$_SESSION["userEmail"];?>
-
 <p>
 	Tere tulemast <?=$_SESSION["userEmail"];?>!
-	<a href="?logout=1">logi välja</a>
+	<a href="?logout=1">Logi vÃ¤lja</a>
 </p>
 
-<h2>Salvesta sündmus</h2>
+<h2>Salvesta sÃ¼ndmus</h2>
 <form method="POST" >
 	
 	<label>Vanus</label><br>
 	<input name="age" type="number">
 	
 	<br><br>
-	<label>Värv</label><br>
+	<label>VÃ¤rv</label><br>
 	<input name="color" type="color">
 	
 	<br><br>
@@ -75,7 +106,7 @@
 		$html .= "<tr>";
 			$html .= "<th>ID</th>";
 			$html .= "<th>Vanus</th>";
-			$html .= "<th>Värv</th>";
+			$html .= "<th>VÃ¤rv</th>";
 		$html .= "</tr>";
 		
 		//iga liikme kohta massiivis
@@ -111,7 +142,7 @@
 			margin: 10px;
 		";
 				
-		echo "<p style ='  ".$style."  '>".$p->age."</p>";
-		
+		echo "<p style ='  ".$style."  '>".$p->age."</p>";		
+	 
 	}
 ?>
