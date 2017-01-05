@@ -1,11 +1,16 @@
 <?php  
 
-	require("./functions_2.php");
+
+require("functions_2.php");
+	require ("User.class.php");
+	$User = new User($mysqli);
+
+	require ("Helper.class.php");
+	$Helper = new Helper ();
 
 	if (isset($_SESSION["userid"])) {
-			header("Location: data_2.php");
-			exit();
-		}
+		header("Location: data.php");
+	}
 
 // MUUTUJAD
 	$signupEmail = "";
@@ -64,7 +69,7 @@
 	
 		echo $password."<br>";
 // signup FUNCTION
-		signup($signupEmail, $password);
+		$User->signup($signupEmail, $password);
 		}
 
 	$notice = "";
@@ -77,7 +82,7 @@
 // login Autofill 
 		$loginSalvestatudEmail = $_POST["loginEmail"];
 //
-	 	$notice = login ($_POST["loginEmail"], $_POST["loginPassword"]);	
+	 	$notice = $User->login ($_POST["loginEmail"], $_POST["loginPassword"]);	
 	 	}
 
 ?>

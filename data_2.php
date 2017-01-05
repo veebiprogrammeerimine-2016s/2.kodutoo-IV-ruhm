@@ -1,6 +1,10 @@
 <?php 
 
-require ("functions_2.php");
+require("functions_2.php");
+require("Helper.class.php");
+$Helper = new Helper($mysqli);
+require("Event.class.php");
+$Event = new Event($mysqli);
 
 $place = "";
 $duration = "";	
@@ -29,14 +33,14 @@ $end_durationError = "";
 		if (!empty($_POST['duration'])&&
 			!empty($_POST['end_duration']) ) {
 		
-			saveEvent(cleanInput($_POST['place']), $_POST['duration'], $_POST['end_duration']);
+			$Event->saveEvent($Helper->cleanInput($_POST['place']), $_POST['duration'], $_POST['end_duration']);
 		}
 		echo "Vali laud ja aeg";		
 		//header("Location: login_2.php");
 		//exit();
 		}
 
-	$players = getAllPlayers();
+	$players = $Event->getAllPlayers();
 
 
  ?>
