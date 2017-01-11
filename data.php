@@ -2,6 +2,39 @@
 	//ühendan sessiooniga
 	require("functions.php");
 
+	$pointsError = "*";
+
+	if (isset ($_POST["points"])) {
+			if (empty ($_POST["points"])) {
+				$pointsError = "* Sisesta punktide arv (1-10)!";
+			} else {
+				$points = $_POST["points"];
+		}
+
+	}
+
+	$colorError = "*";
+
+	if (isset ($_POST["color"])) {
+			if (empty ($_POST["color"])) {
+				$colorError = "* Sisesta värv!";
+			} else {
+				$color = $_POST["color"];
+		}
+
+	}
+
+	$addressError = "*";
+
+	if (isset ($_POST["address"])) {
+			if (empty ($_POST["address"])) {
+				$addressError = "* Sisesta aadress!";
+			} else {
+				$address = $_POST["address"];
+		}
+
+	}
+
 	//kui ei ole sisseloginud, suunan login lehele
 	if (!isset($_SESSION["userId"])) {
 		header("Location: login.php");
@@ -14,28 +47,29 @@
 		session_destroy();
 
 		header("Location: login.php");
-		exit();
+		//exit();
 
 	}
 
 
 	if ( isset($_POST["points"]) &&
 		 isset($_POST["color"]) &&
+		 isset($_POST["address"]) &&
 		 !empty($_POST["points"]) &&
-		 !empty($_POST["color"])
+		 !empty($_POST["color"]) &&
+		 !empty($_POST["address"])
+
 	) {
 
+		saveFeedback(cleanInput($_POST["points"]), cleanInput($_POST["color"]), cleanInput($_POST["address"]));
 
-		$color = cleanInput($_POST["color"]);
-
-		saveEvent(cleanInput($_POST["points"]), $color);
+		header("Location: data.php");
 	}
 
-	$people = getAllPeople();
-
-	echo "<pre>";
-	var_dump($people);
-	echo "</pre>";
+	$feedback = getAllFeedback();
+	/*echo "<pre>";
+	var_dump($feedback);
+	echo "</pre>";*/
 
 ?>
 <h1>Data</h1>
@@ -49,7 +83,7 @@
 	<a href="?logout=1">logi välja</a>
 </p>
 
-<h1>Anna oma üürikorterile hinnang</h1>
+<h1>Anna oma endisele üürikorterile hinnang</h1>
 
 <p>
 	Palun anna oma endisele üürikorterile hinnang ühest kümneni
@@ -58,14 +92,17 @@
 <form method="POST" >
 
 	<label>Punktid (1-10)</label><br>
-	<input name="points" type="number">
+	<input name="points" type="number"> <?php echo $pointsError; ?>
 
 	<br><br>
 	<label>Värv</label><br>
-	<input name="color" type="color">
+	<input name="color" type="color"> <?php echo $colorError; ?>
 
-	<br<br>
+	<br><br>
+	<label>Korteri aadress</label><br>
+	<input name="address" type="text"> <?php echo $addressError; ?>
 
+	<br><br>
 	<input type="submit" value="Salvesta">
 
 </form>
@@ -80,18 +117,20 @@
 
 		$html .= "<tr>";
 			$html .= "<th>ID</th>";
-			$html .= "<th>Punktid</th>";
-			$html .= "<th>Värv</th>";
+			$html .= "<th>punktid</th>";
+			$html .= "<th>värv</th>";
+			$html .= "<th>aadress</th>";
 		$html .= "</tr>";
 
 		//iga liikme kohta massiivis
-		foreach ($people as $p) {
+		foreach ($feedback as $f) {
 
-			$html .= "<tr>";
-				$html .= "<td>".$p->id."</td>";
-				$html .= "<td>".$p->points."</td>";
-				$html .= "<td>".$p->lightColor."</td>";
-			$html .= "</tr>";
+		$html .= "<tr>";
+			$html .= "<td>".$f->id."</td>";
+			$html .= "<td>".$f->points."</td>";
+			$html .= "<td>".$f->lightColor."</td>";
+			$html .= "<td>".$f->address."</td>";
+		$html .= "</tr>";
 
 		}
 
@@ -104,13 +143,9 @@
 <h2>Midagi huvitavat</h2>
 
 <?php
-
-
-	foreach($people as $p) {
-
+	foreach($feedback as $f) {
 		$style = "
-
-		    background-color:".$p->lightColor.";
+		    background-color:".$f->lightColor.";
 			width: 40px;
 			height: 40px;
 			border-radius: 20px;
@@ -119,10 +154,7 @@
 			float: left;
 			margin: 10px;
 		";
-
-		echo "<p style ='  ".$style."  '>".$p->points."</p>";
-
+		echo "<p style ='  ".$style."  '>".$f->points."</p>";
 	}
 
-
-?>
+	?>

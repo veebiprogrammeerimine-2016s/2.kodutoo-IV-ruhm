@@ -18,37 +18,25 @@
   $loginemail = "";
 
 	if (isset ($_POST["loginEmail"])) {
-			//on olemas
-			// kas epost on tühi
 			if (empty ($_POST["loginEmail"])) {
-
 			// on tühi
 			$signupEmailError = "* Väli on kohustuslik!";
-
 		} else {
 			// email on olemas ja õige
 			$loginEmail = $_POST["loginEmail"];
-
 		}
-
 	}
 
 	//kas keegi vajutas nuppu ja see on olemas
 
 	if (isset ($_POST["signupEmail"])) {
-      //on olemas
-		  // kas epost on tühi
 		  if (empty ($_POST["signupEmail"])) {
-
 			// on tühi
 			$signupEmailError = "* Väli on kohustuslik!";
-
 		} else {
 			// email on olemas ja õige
 			$signupEmail = $_POST["signupEmail"];
-
 		}
-
 	}
 
 	$signupPasswordError = "*";
@@ -146,12 +134,15 @@
 
 		<form method="POST" >
 
+			<label>E-post</label><br>
+			<div class="form-group">
+					<input class="form-control" name="loginEmail" placeholder="E-post" type="email" value="<?php if(isset($_POST['loginEmail'])) { echo $_POST['loginEmail']; } ?>" class="textbox required email">
+			</div>
 
-			<input name="loginEmail" placeholder="E-post" type="email">
-
-			<br><br>
-
-			<input name="loginPassword" placeholder="Parool" type="password">
+			<label>Parool</label><br>
+			<div class="form-group">
+			<input class="form-control" name="loginPassword" placeholder="Parool" type="password">
+			</div>
 
 			<br><br>
 

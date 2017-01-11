@@ -7,14 +7,14 @@
 	$database = "if16_stenly_4";
 	// functions.php
 
-	function signup($email, $password) {
+	function signup($email, $password, $created) {
 
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 
-		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUE (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password, created) VALUES (?, ?, ?)");
 		echo $mysqli->error;
 
-		$stmt->bind_param("ss", $email, $password);
+		$stmt->bind_param("ssd", $email, $password, $created);
 
 		if ( $stmt->execute() ) {
 			echo "õnnestus";
@@ -30,11 +30,7 @@
 
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 
-		$stmt = $mysqli->prepare("
-			SELECT id, email, password, created
-			FROM user_sample
-			WHERE email = ?
-		");
+		$stmt = $mysqli->prepare("SELECT id, email, password, created FROM user_sample WHERE email = ?");
 
 		echo $mysqli->error;
 
@@ -45,13 +41,11 @@
 		$stmt->bind_result($id, $emailFromDb, $passwordFromDb, $created);
 
 		$stmt->execute();
-
 		//ainult SELECT'i puhul
 		if($stmt->fetch()) {
 			// oli olemas, rida käes
 			//kasutaja sisestas sisselogimiseks
 			$hash = hash("sha512", $password);
-
 			if ($hash == $passwordFromDb) {
 				echo "Kasutaja $id logis sisse";
 
@@ -63,7 +57,7 @@
 				exit();
 
 			} else {
-				$notice = "parool vale";
+				$notice = "Vale parool!";
 			}
 
 
@@ -87,32 +81,32 @@
 
 
 
-	function saveEvent($points, $color) {
+	function saveFeedback($points, $color, $address) {
 
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 
-		$stmt = $mysqli->prepare("INSERT INTO tagasiside (points, color) VALUE (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO tagasiside (points, color, address) VALUE (?, ?, ?)");
 		echo $mysqli->error;
 
-		$stmt->bind_param("is", $points, $color);
+		$stmt->bind_param("iss", $points, $color, $address);
 
 		if ( $stmt->execute() ) {
-			echo "õnnestus";
+			echo "Salvestamine õnnestus";
 		} else {
 			echo "ERROR ".$stmt->error;
 		}
 
+		$stmt->close();
+		$mysqli->close();
+
 	}
 
-	function getAllPeople() {
+	function getAllFeedback() {
 
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 
-		$stmt = $mysqli->prepare("
-			SELECT id, points, color
-			FROM tagasiside
-		");
-		$stmt->bind_result($id, $points, $color);
+		$stmt = $mysqli->prepare("SELECT id, points, color, address FROM tagasiside");
+		$stmt->bind_result($id, $points, $color, $address);
 		$stmt->execute();
 
 		$results = array();
@@ -125,6 +119,7 @@
 			$human->id = $id;
 			$human->points = $points;
 			$human->lightColor = $color;
+			$human->address = $address;
 
 
 			//echo $color."<br>";
@@ -138,17 +133,11 @@
 
 
 	function cleanInput($input) {
-
-		// input = "  romil  ";
 		$input = trim($input);
-		// input = "romil";
-
 		// võtab välja \
 		$input = stripslashes($input);
-
 		// html asendab, nt "<" saab "&lt;"
 		$input = htmlspecialchars($input);
-
 		return $input;
 
 	}
@@ -156,7 +145,6 @@
 	function saveInterest ($interest) {
 
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
-
 		$stmt = $mysqli->prepare("INSERT INTO interests (interest) VALUES (?)");
 
 		echo $mysqli->error;
@@ -166,58 +154,46 @@
 		if($stmt->execute()) {
 			echo "salvestamine õnnestus";
 		} else {
-		 	echo "ERROR ".$stmt->error;
+			echo "ERROR ".$stmt->error;
 		}
 
 		$stmt->close();
 		$mysqli->close();
 
 	}
-
-	function saveUserInterest ($interest) {
+	function saveUserInterest ($interestid) {
 
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 
-		$stmt = $mysqli->prepare("
-			SELECT id FROM user_interests_4
-			WHERE user_id=? AND interest_id=?
-		");
-		$stmt->bind_param("ii", $_SESSION["userId"], $interest);
+		$stmt = $mysqli->prepare("SELECT id FROM user_interests WHERE user_id=? AND interest_id=?");
 
+		$stmt->bind_param("ii", $_SESSION["userId"], $interestid);
 		$stmt->execute();
 
-		//kas oli rida
-		if ($stmt->fetch()) {
+		if ($stmt->fetch())  {
 
-			//oli olemas
 			echo "juba olemas";
-			//pärast returni enam koodi ei vaadata
 			return;
 		}
 
-		// kui ei olnud, jõuame siia
 		$stmt->close();
 
-		$stmt = $mysqli->prepare("
-			INSERT INTO user_interests_4 (user_id, interest_id)
-			VALUES (?, ?)
-		");
+		$stmt = $mysqli->prepare("INSERT INTO user_interests (user_id, interest_id) VALUES (?, ?)");
 
 		echo $mysqli->error;
 
-		$stmt->bind_param("ii", $_SESSION["userId"], $interest);
+		$stmt->bind_param("ii", $_SESSION["userId"], $interestid);
 
 		if($stmt->execute()) {
 			echo "salvestamine õnnestus";
 		} else {
-		 	echo "ERROR ".$stmt->error;
+			echo "ERROR ".$stmt->error;
 		}
 
 		$stmt->close();
 		$mysqli->close();
 
 	}
-
 	function getAllInterests() {
 
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
@@ -253,31 +229,22 @@
 
 		return $result;
 	}
+	function getUserInterests() {
 
+	$mysqli = new mysqli(
+		$GLOBALS["serverHost"],
+		$GLOBALS["serverUsername"],
+		$GLOBALS["serverPassword"],
+		$GLOBALS["database"]);
 
-
-
-
-	/*function sum($x, $y) {
-
-		return $x + $y;
+	$stmt = $mysqli->prepare("
+		SELECT interest
+		FROM interests
+		JOIN user_interests
+		ON user_interests.interest_id=interests.id
+		WHERE user_interests.user_id=?
+	");
 
 	}
-
-	echo sum(12312312,12312355553);
-	echo "<br>";
-
-
-	function hello($firstname, $lastname) {
-		return
-		"Tere tulemast "
-		.$firstname
-		." "
-		.$lastname
-		."!";
-	}
-
-	echo hello("romil", "robtsenkov");
-	*/
 
 ?>
