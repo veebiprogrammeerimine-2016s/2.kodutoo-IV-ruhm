@@ -57,13 +57,13 @@
 		return $notice;
 	}
 	
-	function saveEvent($age, $color) {
+	function saveEvent($City, $Cinema, $Movie, $Genre, $Comment, $Rating) {
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("INSERT INTO whistle (age, color) VALUE (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO kino (City, Cinema, Movie, Genre, Comment, Rating) VALUE (?, ?, ?, ?, ?, ?)");
 		echo $mysqli->error;
 		
-		$stmt->bind_param("is", $age, $color);
+		$stmt->bind_param("sssssi", $City, $Cinema, $Movie, $Genre, $Comment, $Rating);
 		
 		if ( $stmt->execute() ) {
 			echo "õnnestus <br>";
@@ -77,21 +77,27 @@
 	function getAllPeople(){
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt=$mysqli->prepare("SELECT id, age, color FROM whistle");
-		$stmt->bind_result($id, $age, $color);
+		$stmt=$mysqli->prepare("SELECT id, City, Cinema, Movie, Genre, Comment, Rating FROM kino WHERE deleted IS NULL");
+		$stmt->bind_result($id, $City, $Cinema, $Movie, $Genre, $Comment, $Rating);
 		$stmt->execute();
 		$results=array();
 		//tsüklissisu toiimib seni kaua, mitu rida SQL lausega tuleb
 		while($stmt->fetch()) {
 			$human=new StdClass();
 			$human->id=$id;
-			$human->age=$age;
-			$human->color=$color;
-			//echo $color."<br>";
+			$human->City=$City;
+			$human->Cinema=$Cinema;
+			$human->Movie=$Movie;
+			$human->Genre=$Genre;
+			$human->Comment=$Comment;
+			$human->Rating=$Rating;
+			
+			
+			
 			array_push($results, $human);
 		}
 		return $results;
-	}
+		}
 	
 	function cleanInput($input) {
 		$input=trim($input);
@@ -100,7 +106,9 @@
 		return $input;
 	}
 	
-
+	
+	
+	
 	/*function sum($x, $y) {
 		return $x + $y;
 	}

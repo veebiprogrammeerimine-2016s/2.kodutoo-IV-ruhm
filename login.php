@@ -1,6 +1,5 @@
 <?php 
 
-	
 	require("functions.php");
 	
 	//kui on sisse loginud siis suunan data lehele
@@ -24,7 +23,7 @@
 	//PROOV Töötab 
 	if(isset ($_POST["loginEmail"])) {
 		if(empty ($_POST["loginEmail"])){
-			$signupEmailError = "* Väli on kohustuslik!";
+			$signupEmailError = "*";
 		} else{
 		$loginEmail = $_POST["loginEmail"];
 		}
@@ -50,8 +49,8 @@
 			$firstnameError = "* Väli on kohustuslik!";
 		} else {
 			$firstname = $_POST["firstname"];
-			}
 		}
+	}
 	
 	$lastnameError= "*";
 	if (isset ($_POST["lastname"])) {
@@ -59,17 +58,19 @@
 			$lastnameError = "* Väli on kohustuslik!";
 		} else {
 			$lastname = $_POST["lastname"];
-			}
 		}
+	}
 	
 	$ageError= "*";
 	if (isset ($_POST["age"])) {
 		if (empty ($_POST["age"])) {
 			$ageError = "* Väli on kohustuslik!";
 		} else {
-			$age = $_POST["age"];
+		if (intval($_POST["age"]) < 13) {
+			$ageError = "Vanus peab olema vähemalt 13";
 			}
 		}
+	} 
 	
 	$signupPasswordError= "*";
 	if (isset ($_POST["signupPassword"])) {
@@ -81,6 +82,7 @@
 				$signupPasswordError = "* Parool peab olema vähemalt 8 tähemärki pikk!";
 			}
 		}
+	}
 	
 	$gender = "female";
 	if (isset ($_POST["gender"])) {
@@ -104,11 +106,11 @@
 	){
 		//vigu ei olnud, kõik on olemas
 		echo "Salvestan...<br>";
-		echo "email ".$signupEmail. "<br>";
+	/*	echo "email ".$signupEmail. "<br>";
 		echo "parool ".$_POST["signupPassword"]."<br>";
 			$password = hash("sha512", $_POST["signupPassword"]);
 		echo $password."<br>";
-		signup($signupEmail, $password);
+		signup($signupEmail, $password);*/
 		
 	}
 	
@@ -125,16 +127,67 @@
 	
 ?>
 
-
  <!DOCTYPE html>
 <html>
 <head>
 <style>
+input[type=text] {
+	
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+input[type=email] {
+	
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+input[type=password] {
+	
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+input[type=submit] {
+	font-style: oblique;
+    padding:5px 15px; 
+    background: #bfbfbf; 
+    border:0 none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+input[type=number] {
+	
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+input[type=text] {
+	
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+input[type=radio] {
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
 body {
-    background-color: tan;
+    background: tan;
 }
 h1 {
-    color:  #ff0066;
+	font-style: oblique;
+    color: black;
     text-align: left;
 }
 p {
@@ -143,26 +196,21 @@ p {
 }
 </style>
 </head>
-
 	<head>
-		<title>Sisselogimise leht</title>
+		<title>PROOV</title>
 	</head>
-	<body>
-	
+	<body>	
 		<h1>Logi sisse</h1>
 		<p style="color:black;"><?=$notice;?></p>
 		<form method="POST" >
-		
 			<input name="loginEmail" placeholder="Email" type="email" value="<?=$loginEmail;?>">
 			<br><br>
 			<input name="loginPassword" placeholder="Parool" type="password">
 			<br><br>
 			<input type="submit" value="Logi sisse">
 		</form>
-	
 		
 		<h1>Loo kasutaja</h1>
-		
 		<form method="POST">
 		<input type="text" name="firstname" placeholder="Eesnimi" value="<?=$firstname;?>"> <?php echo $firstnameError;?>
 		<br><br>
