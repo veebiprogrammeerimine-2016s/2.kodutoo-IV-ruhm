@@ -150,7 +150,39 @@
 			}
 			
 			return $results;
-	}			
+	}		
+
+
+			function getAllVC() {
+				 
+				 $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]); 
+		
+				$stmt = $mysqli->prepare("
+					SELECT videokaart, malutyyp, malukiirus
+					FROM videokaardid2
+				");
+	
+			$stmt->bind_result($videokaart1, $malutyyp, $malukiirus);
+		
+			$stmt->execute();
+			
+			$results2 = array();
+			
+			// tsüklit tehakse nii mitu korda, mitu rida sql lausega tuleb.			
+			while ($stmt->fetch()) {
+				
+				$videokaart = new StdClass();
+				$videokaart->vc = $videokaart1;
+				$videokaart->mt = $malutyyp;
+				$videokaart->mk = $malukiirus;
+			
+					//echo $color."<br>";
+					array_push($results2, $videokaart);
+					
+			}
+			
+			return $results2;
+	}
 	
 			function cleanInput($input) {
 				

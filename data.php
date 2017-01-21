@@ -25,6 +25,8 @@
 				 saveEvent($vanus, $varvus);
 			}
 	$people = getAllPeople();
+	
+	$videokaart = getAllVC();
 /*echo "<pre>";
 	var_dump($people);
 echo "</pre>";*/
@@ -71,7 +73,7 @@ echo "</pre>";*/
 		
 		
 		
-		foreach ($people as $p) {
+		foreach($people as $p) {
 			
 			$html .= "<tr>";
 				$html .= "<td>".$p->id."</td>";
@@ -90,9 +92,28 @@ echo "</pre>";*/
 	
 	<?php
 	
-		foreach($people as $p) {
+		$html = "<table>";
+			$html .= "<tr>";
+				$html .= "<th>Videokaart</th>";
+				$html .= "<th>Mälutüüp</th>";
+				$html .= "<th>Mälukiirus</th>";
+			$html .="</tr>";
+	
+	
+		foreach($videokaart as $v) {
 
-			$style = "
+			$html .= "<tr>";
+				$html .= "<td>".$v->vc."</td>";
+				$html .= "<td>".$v->mt."</td>";
+				$html .= "<td>".$v->mk."</td>";
+			$html .= "</tr>";
+		}
+		$html .= "</table>";			
+	
+	echo $html;	
+		
+		
+			/*	$style = "
 				background-color:".$p->Color.";
 				width: 40px;
 				height: 40px;
@@ -106,3 +127,4 @@ echo "</pre>";*/
 			echo "<p style = '".$style."'>".$p->age."</p>";
 			
 		}
+		*/
